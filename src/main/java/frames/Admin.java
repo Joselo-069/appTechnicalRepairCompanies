@@ -3,7 +3,6 @@ package frames;
 import controllers.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,6 +93,11 @@ public class Admin extends javax.swing.JFrame {
         getContentPane().add(jButton_Creatividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 120, 100));
 
         jButton_Capturista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/capturista.png"))); // NOI18N
+        jButton_Capturista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CapturistaActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_Capturista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 100));
 
         jButton_Tecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnico.png"))); // NOI18N
@@ -148,9 +152,11 @@ public class Admin extends javax.swing.JFrame {
         gestion.setVisible(true);
     }//GEN-LAST:event_jButton_GestionarUsuarioActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton_CapturistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CapturistaActionPerformed
+        Capturista cap = new Capturista();
+        cap.setVisible(true);
+    }//GEN-LAST:event_jButton_CapturistaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

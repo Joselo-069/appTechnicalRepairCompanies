@@ -65,8 +65,6 @@ public class Login extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         txt_user = new javax.swing.JTextField();
         jLabel_Logo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -90,11 +88,9 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(btn_access, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
 
-        txt_password.setBackground(new java.awt.Color(255, 255, 255));
         txt_password.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txt_password.setForeground(new java.awt.Color(0, 0, 0));
         txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_password.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txt_password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_passwordActionPerformed(evt);
@@ -102,11 +98,9 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 370, 210, -1));
 
-        txt_user.setBackground(new java.awt.Color(255, 255, 255));
         txt_user.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txt_user.setForeground(new java.awt.Color(0, 0, 0));
         txt_user.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_user.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txt_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_userActionPerformed(evt);
@@ -119,12 +113,6 @@ public class Login extends javax.swing.JFrame {
         jLabel_Logo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel_Logo.setPreferredSize(new java.awt.Dimension(250, 250));
         getContentPane().add(jLabel_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 270, 270));
-
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -214,9 +202,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_access;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Logo;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables

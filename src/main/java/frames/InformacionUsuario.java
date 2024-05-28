@@ -1,6 +1,7 @@
 package frames;
 
 import controllers.Conexion;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -165,10 +166,20 @@ public class InformacionUsuario extends javax.swing.JFrame {
 
         jButton_restaurar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton_restaurar.setText("Restaurar Password");
+        jButton_restaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_restaurarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_restaurar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, 210, 35));
 
         jButton_actualizar1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton_actualizar1.setText("Actualizar Usuario");
+        jButton_actualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_actualizar1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_actualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 210, 35));
 
         pack();
@@ -194,9 +205,48 @@ public class InformacionUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_usernameActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton_actualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizar1ActionPerformed
+        String permisos_cmb; 
+        int estatus_cmb, validacion = 0;
+        String nombre, email, telefono, username, pass, permisos_string="", estatus_string="";
+        
+        email = txt_email.getText().trim();
+        username = txt_username.getText().trim();
+        nombre = txt_nombre.getText().trim();
+        telefono = txt_telefono.getText().trim();
+        permisos_string = (String) cmb_niveles.getSelectedItem();
+        estatus_string = (String) cmbEstatus.getSelectedItem();
+        
+        if (email.equals("")) {
+            txt_email.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (username.equals("")) {
+            txt_username.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (nombre.equals("")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (telefono.equals("")) {
+            txt_telefono.setBackground(Color.red);
+            validacion++;
+        }
+        
+        existeUsername(username);
+        actualizarUsuario(nombre, email, telefono, username, permisos_string, estatus_string);
+        
+    }//GEN-LAST:event_jButton_actualizar1ActionPerformed
+
+    private void jButton_restaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restaurarActionPerformed
+        RestaurarPassword res = new RestaurarPassword();
+        res.setVisible(true);
+    }//GEN-LAST:event_jButton_restaurarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -248,4 +298,44 @@ public class InformacionUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
+
+    private void existeUsername(String username) {
+        try {
+            Connection cn = Conexion.conection();
+            PreparedStatement pst = cn.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username + "' AND NOT id_usuario = '" + ID + "'");
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                txt_username.setBackground(Color.red);
+                JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
+            }
+            
+            cn.close();
+
+        } catch (Exception e) {
+            System.err.println("Error al validar nombre del usuario" + e);
+            JOptionPane.showMessageDialog(null, "Error al comparar usuario");
+        }
+    }
+    
+    public void actualizarUsuario (String nombre, String email, String telefono, String username, String permisos_string, String estatus_string) {
+        try {
+            Connection cn = Conexion.conection();
+            PreparedStatement pst = cn.prepareStatement("UPDATE usuarios SET nombre_usuario=?, email=?, telefono=?, username=?, tipo_nivel=?, estatus=? WHERE id_usuario= '" + ID + "'");
+            pst.setString(1, nombre);
+            pst.setString(2, email);
+            pst.setString(3, telefono);
+            pst.setString(4, username);
+            pst.setString(5, permisos_string);
+            pst.setString(6, estatus_string);
+
+            pst.executeUpdate();
+            cn.close();
+            
+            JOptionPane.showMessageDialog(null, "Usuario Modificado");
+
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar " + e);
+        }
+    }
 }

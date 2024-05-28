@@ -3,7 +3,6 @@ package frames;
 import controllers.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -14,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.tools.Tool;
 
 public class GestionarUsuarios extends javax.swing.JFrame {
 
