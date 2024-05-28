@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package frames;
 
 import controllers.Conexion;
@@ -13,10 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author ACER
- */
 public class Admin extends javax.swing.JFrame {
 
 
@@ -54,7 +46,7 @@ public class Admin extends javax.swing.JFrame {
     
     @Override
     public Image getIconImage(){
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
     }
 
@@ -79,6 +71,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel1_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1_NombreUsuario.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
@@ -90,6 +83,11 @@ public class Admin extends javax.swing.JFrame {
         getContentPane().add(jButton_RegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 120, 100));
 
         jButton_GestionarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/informationuser.png"))); // NOI18N
+        jButton_GestionarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GestionarUsuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_GestionarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 120, 100));
 
         jButton_Creatividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/creatividad.png"))); // NOI18N
@@ -144,6 +142,11 @@ public class Admin extends javax.swing.JFrame {
         RegistrarUsuarios registrar = new RegistrarUsuarios();
         registrar.setVisible(true);
     }//GEN-LAST:event_jButton_AcercaDeActionPerformed
+
+    private void jButton_GestionarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GestionarUsuarioActionPerformed
+        GestionarUsuarios gestion = new GestionarUsuarios();
+        gestion.setVisible(true);
+    }//GEN-LAST:event_jButton_GestionarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
