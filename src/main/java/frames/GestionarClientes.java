@@ -1,7 +1,6 @@
 package frames;
 
 import controllers.Conexion;
-import static frames.GestionarUsuarios.user_update;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -69,7 +68,8 @@ public class GestionarClientes extends javax.swing.JFrame {
                 
                 if (fila_point > -1) {
                     IdCliente = (int)model.getValueAt(fila_point, columna_point);
-                    JOptionPane.showMessageDialog(null, "El id del cliente es: " + IdCliente);
+                    InformacionCliente info = new InformacionCliente();
+                    info.setVisible(true);
                 }
             }
         });
