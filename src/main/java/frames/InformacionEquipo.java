@@ -1,17 +1,20 @@
 package frames;
 
 import controllers.Conexion;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class InformacionEquipo extends javax.swing.JFrame {
 
     int idClient, idEquipament;
-    String user, nom_cli;
+    String user = "", nom_cli = "";
     
     public InformacionEquipo() {
         initComponents();
@@ -27,37 +30,36 @@ public class InformacionEquipo extends javax.swing.JFrame {
             if (rs.next()) {
                 nom_cli = rs.getString("nombre_cliente");
             }
-            cn.close();
+            // cn.close();
         } catch (Exception e) {
             System.err.print("error al consultar cliente" + e);
         }
         
         try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipament + "'");
-            ResultSet rs = pst.executeQuery();
+            Connection cn1 = Conexion.conection();
+            PreparedStatement pst1 = cn1.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipament + "'");
+            ResultSet rs1 = pst1.executeQuery();
             
-            if (rs.next()) {
-                cmb_tipo.setSelectedItem(rs.getString("tipo_equipo"));
-                cmb_marca.setSelectedItem(rs.getString("marca"));
-                cmb_estatus.setSelectedItem(rs.getString("tipo_equipo"));
-                txt_modelo.setText(rs.getString("modelo"));
-                txt_serie.setText(rs.getString("num_serie"));
-                txt_modificaion.setText(rs.getString("ultima_modificacion"));
+            if (rs1.next()) {
+                cmb_tipo.setSelectedItem(rs1.getString("tipo_equipo"));
+                cmb_marca.setSelectedItem(rs1.getString("marca"));
+                cmb_estatus.setSelectedItem(rs1.getString("tipo_equipo"));
+                txt_modelo.setText(rs1.getString("modelo"));
+                txt_serie.setText(rs1.getString("num_serie"));
+                txt_modificaion.setText(rs1.getString("ultima_modificacion"));
                 
                 String dia = "", mes = "", annio = "";
-                dia = rs.getString("dia_ingreso");
-                mes = rs.getString("mes_ingreso");
-                annio = rs.getString("annio_ingreso");
+                dia = rs1.getString("dia_ingreso");
+                mes = rs1.getString("mes_ingreso");
+                annio = rs1.getString("annio_ingreso");
                 txt_fecha.setText(dia + " del " + mes + " del " + annio);
                 
-                txtp_observaciones.setText(rs.getString("obvervaciones"));
-                txtp_comentarios.setText(rs.getString("comentarios_tecnicos"));
+                txtp_observaciones.setText(rs1.getString("obvervaciones"));
+                txtp_comentarios.setText(rs1.getString("comentarios_tecnicos"));
                 
-                jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + rs.getString("revision_tecnica_de"));
+                jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + rs1.getString("revision_tecnica_de"));
             }
-            
-            cn.close();
+            //cn.close();
         } catch (Exception e) {
             System.err.print("error al consultar equipo " + e);
         }
@@ -70,7 +72,8 @@ public class InformacionEquipo extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_nombreCliente.setText(nom_cli);
-        
+       System.out.print("este es un errro " + idEquipament);
+
     }
 
     @Override
@@ -181,7 +184,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         getContentPane().add(cmb_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         btn_update.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btn_update.setText("Actualizar Cliente");
+        btn_update.setText("Actualizar Equipo");
         btn_update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_updateActionPerformed(evt);
@@ -259,7 +262,58 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_serieActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        int validacion = 0;
+        String tipo_equipo, marca, modelo, num_serie, estatus, observaciones;
+        
+        tipo_equipo = cmb_tipo.getSelectedItem().toString();
+        marca = cmb_marca.getSelectedItem().toString();
+        estatus = cmb_estatus.getSelectedItem().toString();
+        
+        modelo = txt_modelo.getText().trim();
+        num_serie = txt_serie.getText().trim();
+        observaciones = txtp_observaciones.getText();
+        
+        if (modelo.equals("")) {
+            txt_modelo.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (num_serie.equals("")) {
+            txt_serie.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (observaciones.equals("")) {
+            txtp_observaciones.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (validacion == 0) {
+            try {
+                Connection cn = Conexion.conection();
+                PreparedStatement pst = cn.prepareStatement("UPDATE equipos set tipo_equipo=?, marca=?, modelo=?, num_serie=?, observaciones=?, estatus=?, ultima_modificacion=? WHERE id_equipo = '" + idEquipament +"'");
+                
+                pst.setString(1, tipo_equipo);
+                pst.setString(2, marca);
+                pst.setString(3, modelo);
+                pst.setString(4, num_serie);
+                pst.setString(5, observaciones);
+                pst.setString(6, estatus);
+                pst.setString(7, user);
 
+                pst.executeUpdate();
+                cn.close();
+                
+                clean();
+                
+                JOptionPane.showMessageDialog(null, "Actualizacion correcta.");
+                this.dispose();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar equipo");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+        }
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void txt_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaActionPerformed
@@ -332,4 +386,12 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JTextPane txtp_comentarios;
     private javax.swing.JTextPane txtp_observaciones;
     // End of variables declaration//GEN-END:variables
+
+    private void clean(){
+        txt_nombreCliente.setText("");
+        txt_fecha.setText("");
+        txt_modelo.setText("");
+        txt_serie.setText("");
+        txtp_observaciones.setText("");
+    }
 }

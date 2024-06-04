@@ -1,13 +1,22 @@
 package frames;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import controllers.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class Capturista extends javax.swing.JFrame {
@@ -93,6 +102,11 @@ public class Capturista extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
 
         jButton_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/impresora.png"))); // NOI18N
+        jButton_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_imprimirActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_imprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 120, 100));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
@@ -116,6 +130,58 @@ public class Capturista extends javax.swing.JFrame {
        GestionarClientes gestion_cliente = new GestionarClientes();
        gestion_cliente.setVisible(true);
     }//GEN-LAST:event_jButton_gestionarClientesActionPerformed
+
+    private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
+       Document document = new Document();
+       
+        try {
+            String route = System.getProperty("user.home");
+            PdfWriter.getInstance(document, new FileOutputStream(route + "/Desktop/ListaClientes.pdf"));
+            // com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("");
+            //header.scaleToFit(650,100);
+            //header.setAligment(Chunk.ALING_CENTER);
+            
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Informacion del cliente \n\n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            document.open();
+            document.add(parrafo);
+            
+            PdfPTable tb = new PdfPTable(5);
+            tb.addCell("Id");
+            tb.addCell("Nombre");
+            tb.addCell("Email");
+            tb.addCell("Telefono");
+            tb.addCell("Direccion");
+            
+            try {
+                Connection cn = Conexion.conection();
+                PreparedStatement pst = cn.prepareStatement("SELECT * FROM clientes");
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    do {                        
+                        tb.addCell(rs.getString(1));
+                        tb.addCell(rs.getString(2));
+                        tb.addCell(rs.getString(3));
+                        tb.addCell(rs.getString(4));
+                        tb.addCell(rs.getString(5));
+                    } while (rs.next());
+                    document.add(tb);
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al gener listado de clienetes " + e);
+            }
+            
+            document.close();
+            JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
+            
+        } catch (Exception e) {
+            System.err.print("Error al generar pdf " + e);
+        }
+    }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     /**
      * @param args the command line arguments

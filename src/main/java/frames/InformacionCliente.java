@@ -30,7 +30,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     int idCliente;
-    public static int idEquipo;
+    public static int idEquipo = 0;
     String user = "";
     
     public InformacionCliente() {
@@ -478,7 +478,7 @@ public class InformacionCliente extends javax.swing.JFrame {
                 int columna_point = 0;
                 
                 if (fila_point > -1) {
-                    idCliente = (int)model.getValueAt(fila_point, columna_point);
+                    idEquipo = (int)model.getValueAt(fila_point, columna_point);
                     InformacionEquipo info = new InformacionEquipo();
                     info.setVisible(true);
                 }

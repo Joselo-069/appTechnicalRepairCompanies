@@ -101,6 +101,11 @@ public class Admin extends javax.swing.JFrame {
         getContentPane().add(jButton_Capturista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 100));
 
         jButton_Tecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tecnico.png"))); // NOI18N
+        jButton_Tecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TecnicoActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_Tecnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, 120, 100));
 
         jButton_AcercaDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/addUser.png"))); // NOI18N
@@ -156,6 +161,11 @@ public class Admin extends javax.swing.JFrame {
         Capturista cap = new Capturista();
         cap.setVisible(true);
     }//GEN-LAST:event_jButton_CapturistaActionPerformed
+
+    private void jButton_TecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TecnicoActionPerformed
+        Tecnico tec = new Tecnico();
+        tec.setVisible(true);
+    }//GEN-LAST:event_jButton_TecnicoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

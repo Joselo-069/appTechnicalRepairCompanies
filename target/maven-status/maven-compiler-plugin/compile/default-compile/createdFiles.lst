@@ -1,11 +1,13 @@
 frames\Login.class
 frames\GestionarClientes.class
+frames\Admin$5.class
 frames\RegistrarClientes$3.class
 frames\GestionarClientes$1.class
 frames\InformacionEquipo$1.class
 frames\RegistrarUsuarios$2.class
 frames\Login$3.class
 frames\InformacionUsuario$2.class
+frames\Tecnico$2.class
 frames\Admin$2.class
 frames\InformacionUsuario$6.class
 frames\RegistrarEquipo$3.class
@@ -13,6 +15,7 @@ frames\RegistrarUsuarios$5.class
 frames\InformacionCliente$7.class
 com\mycompany\apptechnicalrepaircompanies\AppTechnicalRepairCompanies.class
 frames\Tecnico.class
+frames\Capturista$4.class
 frames\InformacionEquipo$5.class
 frames\RestaurarPassword$1.class
 frames\InformacionCliente$1.class
@@ -44,6 +47,7 @@ frames\RestaurarPassword$2.class
 frames\RestaurarPassword.class
 frames\Capturista$2.class
 frames\InformacionUsuario$4.class
+frames\Tecnico$4.class
 frames\InformacionCliente$10.class
 frames\GestionarUsuarios$2.class
 frames\RegistrarUsuarios$4.class
@@ -58,6 +62,7 @@ frames\InformacionCliente$9.class
 frames\InformacionEquipo$2.class
 frames\RegistrarEquipo$5.class
 frames\InformacionEquipo$7.class
+frames\Tecnico$3.class
 frames\InformacionCliente$3.class
 frames\Admin$1.class
 frames\GestionarUsuarios.class
