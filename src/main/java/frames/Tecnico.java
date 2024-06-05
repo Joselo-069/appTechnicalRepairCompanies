@@ -127,11 +127,13 @@ public class Tecnico extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_equiposActionPerformed
 
     private void btn_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_statusActionPerformed
- 
+        GraficaEstatus grafico = new GraficaEstatus();
+        grafico.setVisible(true);
     }//GEN-LAST:event_btn_statusActionPerformed
 
     private void btn_marcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_marcasActionPerformed
-
+        GraficaMarcas grafico = new GraficaMarcas();
+        grafico.setVisible(true);
     }//GEN-LAST:event_btn_marcasActionPerformed
 
     /**

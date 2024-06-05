@@ -8,8 +8,12 @@ com\mycompany\apptechnicalrepaircompanies\AppTechnicalRepairCompanies.class
 frames\Tecnico.class
 frames\InformacionEquipo$5.class
 controllers\Conexion.class
+frames\InformacionEquipoTecnico$3.class
+frames\GraficaEstatus.class
 frames\RegistrarEquipo.class
+frames\InformacionEquipoTecnico$6.class
 frames\GestionarEquipos$2.class
+frames\GraficaMarcas$1.class
 frames\InformacionUsuario$7.class
 frames\Tecnico$1.class
 frames\InformacionEquipo$3.class
@@ -27,6 +31,7 @@ frames\InformacionCliente$2.class
 frames\RegistrarEquipo$2.class
 frames\RegistrarClientes$5.class
 frames\GestionarEquipos$3.class
+frames\InformacionEquipoTecnico$7.class
 frames\InformacionUsuario$8.class
 frames\InformacionCliente$9.class
 frames\InformacionEquipo$2.class
@@ -34,9 +39,11 @@ frames\InformacionEquipo$7.class
 frames\InformacionCliente$3.class
 frames\Admin$1.class
 frames\GestionarUsuarios.class
+frames\InformacionEquipoTecnico$1.class
 frames\RegistrarClientes$6.class
 frames\Login$1.class
 frames\RegistrarUsuarios.class
+frames\GraficaEstatus$1.class
 frames\RegistrarUsuarios$1.class
 frames\Admin$5.class
 frames\RegistrarClientes$3.class
@@ -44,6 +51,7 @@ frames\GestionarClientes$1.class
 frames\InformacionEquipo$1.class
 frames\Tecnico$2.class
 frames\Admin$2.class
+frames\InformacionEquipoTecnico$2.class
 frames\InformacionUsuario$6.class
 frames\RegistrarEquipo$3.class
 frames\InformacionCliente$7.class
@@ -55,9 +63,11 @@ frames\InformacionCliente$4.class
 frames\InformacionUsuario$3.class
 frames\GestionarUsuarios$1.class
 frames\Capturista$1.class
+frames\InformacionEquipoTecnico.class
 frames\RegistrarUsuarios$3.class
 frames\InformacionUsuario$1.class
 frames\Login$2.class
+frames\GraficaMarcas.class
 frames\RegistrarUsuarios$6.class
 frames\RegistrarClientes.class
 frames\Capturista.class
@@ -72,6 +82,7 @@ frames\InformacionEquipo.class
 frames\GestionarEquipos.class
 frames\InformacionCliente$6.class
 frames\Admin$3.class
+frames\InformacionEquipoTecnico$4.class
 frames\RegistrarEquipo$5.class
 frames\Tecnico$3.class
 frames\Capturista$3.class
@@ -79,6 +90,7 @@ frames\InformacionUsuario$5.class
 frames\GestionarClientes$2.class
 frames\InformacionEquipo$4.class
 frames\RegistrarClientes$2.class
+frames\InformacionEquipoTecnico$5.class
 frames\Admin$4.class
 frames\InformacionUsuario.class
 frames\Login$4.class

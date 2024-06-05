@@ -239,7 +239,10 @@ public class GestionarEquipos extends javax.swing.JFrame {
                 
                 if (fila_point > -1) {
                     IdEquipo = (int)model.getValueAt(fila_point, columna_point);
+                    /*
                     InformacionCliente info = new InformacionCliente();
+                    info.setVisible(true);*/
+                    InformacionEquipoTecnico info = new InformacionEquipoTecnico();
                     info.setVisible(true);
                 }
             }
