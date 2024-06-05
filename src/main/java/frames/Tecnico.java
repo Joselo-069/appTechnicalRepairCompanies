@@ -122,7 +122,8 @@ public class Tecnico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_equiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_equiposActionPerformed
-
+        GestionarEquipos gestionEquipos = new GestionarEquipos();
+        gestionEquipos.setVisible(true);
     }//GEN-LAST:event_btn_equiposActionPerformed
 
     private void btn_statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_statusActionPerformed
