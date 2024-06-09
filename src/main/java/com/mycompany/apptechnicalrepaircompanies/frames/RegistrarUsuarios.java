@@ -199,8 +199,6 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
             txt_telefono.setBackground(Color.red);
             validacion++;
         }
-
-        existeUsername(username);
         registrarUsuario(nombre, email, telefono, username, pass, permisos_cmb, user);
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
@@ -258,41 +256,24 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 
-    private void existeUsername(String username) {
+    private boolean existeUsername(String username) {
         IUserDao userDao = new UserDao();
-        String name_user = userDao.getUserByUsername(user);
-
-        if (name_user != null) {
+        String name_user = userDao.getUserByUsername(username);
+        if (!name_user.equals("")) {
             txt_username.setBackground(Color.red);
             JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
+            return true;
         }
+        return false;
     }
     
     private void registrarUsuario(String nombre, String email, String telefono, String username, String pass, String permisos_string, String user) {
-        /*try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?)");
-
-            pst.setInt(1, 0);
-            pst.setString(2, nombre);
-            pst.setString(3, email);
-            pst.setString(4, telefono);
-            pst.setString(5, username);
-            pst.setString(6, pass);
-            pst.setString(7, permisos_string);
-            pst.setString(8, "Activo");
-            pst.setString(9, user);
-
-            pst.executeUpdate();
-            cn.close();
-
+        
+        if (!existeUsername(username)) {
+            IUserDao userDao = new UserDao();
+            userDao.registerUser(nombre, email, telefono, username, pass, permisos_string, user);
             limpiar();
-
-            JOptionPane.showMessageDialog(null, "Registro Exitoso");
-        } catch (SQLException e) {
-            System.err.println("Error al registrar usuario" + e);
-            JOptionPane.showMessageDialog(null, "Error al registrar usuario");
-        }*/
+        }
     }
     
     private void limpiar(){

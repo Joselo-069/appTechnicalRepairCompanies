@@ -1,5 +1,8 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
+import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
+import com.mycompany.apptechnicalrepaircompanies.models.User;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -9,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -30,41 +34,13 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT id_usuario, nombre_usuario, username, tipo_nivel, estatus FROM usuarios");
-            ResultSet rs = pst.executeQuery();
-            
-            jTable1 = new JTable(model);
-            jScrollPane1.setViewportView(jTable1);
-            
-            model.addColumn("ID");
-            model.addColumn("Nombre");
-            model.addColumn("Username");
-            model.addColumn("Permisos");
-            model.addColumn("Estatus");
-            
-            while (rs.next()) {
-                Object[] fila = new Object[5];
-                
-                for (int i = 0; i < 5; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                
-                model.addRow(fila);
-            }
-            
-            cn.close();
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al mostrar la informacion");
-        }
-        */
-        jTable1.addMouseListener(new MouseAdapter() {
+        listUsers();
+        
+        tbUsers.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                int fila_point = jTable1.rowAtPoint(e.getPoint());
+                int fila_point = tbUsers.rowAtPoint(e.getPoint());
                 int columna_point = 2;
                 
                 if (fila_point > -1) {
@@ -82,6 +58,30 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         return retValue;
     }
     
+    public void listUsers() {
+        IUserDao userDao = new UserDao();
+        ArrayList<User> users = (ArrayList<User>) userDao.getListUsers();
+
+        tbUsers = new JTable(model);
+        jScrollPane1.setViewportView(tbUsers);
+
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Username");
+        model.addColumn("Permisos");
+        model.addColumn("Estatus");
+
+        for (User user : users) {
+            Object[] fila = new Object[5];
+            fila[0] = user.getId_usuario();
+            fila[1] = user.getNombre_usuario();
+            fila[2] = user.getUsername();
+            fila[3] = user.getTipo_nivel();
+            fila[4] = user.getEstatus();
+            model.addRow(fila);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -89,7 +89,7 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbUsers = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -103,7 +103,7 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         jLabel2.setText("Visualizacion de lista de usuarios ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 223, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -114,7 +114,7 @@ public class GestionarUsuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbUsers);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 546, 140));
 
@@ -159,6 +159,6 @@ public class GestionarUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbUsers;
     // End of variables declaration//GEN-END:variables
 }

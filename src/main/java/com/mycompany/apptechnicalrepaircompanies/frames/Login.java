@@ -99,14 +99,17 @@ public class Login extends javax.swing.JFrame {
     private void btn_accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accessActionPerformed
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
-
+       
+        String tipo_nivel = "";
+        String estatus = "";
+        
         if (!user.equals("") || !pass.equals("")) {
-            
+
             IUserDao userDao = new UserDao();
             User userImpl = userDao.getUserByUsernamePassword(user, pass);
 
-            String tipo_nivel = userImpl.getTipo_nivel();
-            String estatus = userImpl.getEstatus();
+            tipo_nivel = userImpl.getTipo_nivel();
+            estatus = userImpl.getEstatus();
 
             if (tipo_nivel.equalsIgnoreCase("Administrador") && estatus.equalsIgnoreCase("Activo")) {
                 dispose();
