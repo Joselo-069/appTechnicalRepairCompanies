@@ -3,17 +3,11 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
 import com.mycompany.apptechnicalrepaircompanies.models.User;
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +17,8 @@ public class GestionarUsuarios extends javax.swing.JFrame {
     String user;
     public static String user_update = "";
     DefaultTableModel model = new DefaultTableModel();
-    
+    IUserDao userDao = new UserDao();
+
     public GestionarUsuarios() {
         initComponents();
         user = Login.user;
@@ -36,20 +31,6 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         listUsers();
-        
-        tbUsers.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                int fila_point = tbUsers.rowAtPoint(e.getPoint());
-                int columna_point = 2;
-                
-                if (fila_point > -1) {
-                    user_update = (String) model.getValueAt(fila_point, columna_point);
-                    InformacionUsuario info = new InformacionUsuario();
-                    info.setVisible(true);
-                }
-            }
-        });
     }
 
     @Override
@@ -59,7 +40,7 @@ public class GestionarUsuarios extends javax.swing.JFrame {
     }
     
     public void listUsers() {
-        IUserDao userDao = new UserDao();
+        
         ArrayList<User> users = (ArrayList<User>) userDao.getListUsers();
 
         tbUsers = new JTable(model);
@@ -72,16 +53,34 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         model.addColumn("Estatus");
 
         for (User user : users) {
-            Object[] fila = new Object[5];
-            fila[0] = user.getId_usuario();
-            fila[1] = user.getNombre_usuario();
-            fila[2] = user.getUsername();
-            fila[3] = user.getTipo_nivel();
-            fila[4] = user.getEstatus();
-            model.addRow(fila);
+            Object[] file = new Object[5];
+            file[0] = user.getId_usuario();
+            file[1] = user.getNombre_usuario();
+            file[2] = user.getUsername();
+            file[3] = user.getTipo_nivel();
+            file[4] = user.getEstatus();
+            model.addRow(file);
         }
+        
+        selectFileTable();
     }
 
+    public void selectFileTable() {
+        tbUsers.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = tbUsers.rowAtPoint(e.getPoint());
+                int columna_point = 2;
+
+                if (fila_point > -1) {
+                    user_update = (String) model.getValueAt(fila_point, columna_point);
+                    InformacionUsuario info = new InformacionUsuario();
+                    info.setVisible(true);
+                }
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,7 +120,6 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -1,6 +1,5 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -9,7 +8,9 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.Image;
@@ -17,21 +18,18 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class InformacionCliente extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
+    IClientDao clientDao = new ClientDao();
     int idCliente;
     public static int idEquipo = 0;
     String user = "";
+    String nombre, email, telefono, direccion;
     
     public InformacionCliente() {
         initComponents();
@@ -218,59 +216,12 @@ public class InformacionCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_modificacionActionPerformed
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
-         int validacion = 0;
-         String nombre, email, telefono, direccion;
-         
-         nombre = txt_nombre.getText().trim();
-         email = txt_email.getText().trim();
-         telefono = txt_telefono.getText().trim();
-         direccion = txt_direccion.getText().trim();
-         
-        if (nombre.equals("")) {
-            txt_nombre.setBackground(Color.red);
-            validacion++;
-        }
-         
-        if (email.equals("")) {
-            txt_email.setBackground(Color.red);
-            validacion++;
-        }
-         
-        if (telefono.equals("")) {
-            txt_telefono.setBackground(Color.red);
-            validacion++;
-        }
+        nombre = txt_nombre.getText().trim();
+        email = txt_email.getText().trim();
+        telefono = txt_telefono.getText().trim();
+        direccion = txt_direccion.getText().trim();
         
-        if (direccion.equals("")) {
-            txt_direccion.getText().trim();
-            validacion++;
-        }
-            
-        
-        if (validacion == 0) {/*
-            try {
-                Connection cn = Conexion.conection();
-                PreparedStatement pst = cn.prepareStatement("UPDATE clientes SET nombre_cliente=?, mail_cliente=?, tel_cliente=?, dir_cliente=?, ultima_modificacion=? WHERE id_cliente = '" + idCliente +"'");
-                
-                pst.setString(1, nombre);
-                pst.setString(2, email);
-                pst.setString(3, telefono);
-                pst.setString(4, direccion);
-                pst.setString(5, user);
-
-                pst.executeUpdate();
-                cn.close();
-                
-                limpiar();
-                
-                JOptionPane.showMessageDialog(null, "Actualizacion exitosa");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error en actuaizar cliente");
-            }*/
-        } else {
-            JOptionPane.showMessageDialog(null, "Debes de llenar los cammpos");
-        }
+        updateClient(nombre, email, telefono, direccion, user);
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     private void jButton_equipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_equipoActionPerformed
@@ -423,25 +374,15 @@ public class InformacionCliente extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     private void selectClient() {
-        try {/*
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idCliente + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                setTitle("Informacion del usuario " + rs.getString("nombre_cliente") + " - Sesion de " + user);
-                jLabel_titulo.setText("Informacion del cliente " + rs.getString("nombre_cliente"));
-                
-                txt_nombre.setText(rs.getString("nombre_cliente"));
-                txt_email.setText(rs.getString("mail_cliente"));
-                txt_telefono.setText(rs.getString("tel_cliente"));
-                txt_direccion.setText(rs.getString("dir_cliente"));
-                txt_modificacion.setText(rs.getString("ultima_modificacion"));
-            }
-            cn.close();*/
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar, contacte al administrador");
-        }
+        Client client = clientDao.getClientId(idCliente);
+        setTitle("Informacion del usuario " + client.getNombre_cliente() + " - Sesion de " + user);
+        jLabel_titulo.setText("Informacion del cliente " + client.getNombre_cliente());
+
+        txt_nombre.setText(client.getNombre_cliente());
+        txt_email.setText(client.getMail_cliente());
+        txt_telefono.setText(client.getTel_cliente());
+        txt_direccion.setText(client.getDir_cliente());
+        txt_modificacion.setText(client.getUltima_modificacion());
     }
     
     private void selectEquipament() {
@@ -485,6 +426,42 @@ public class InformacionCliente extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    
+    private boolean validateClient(String nombre, String email, String telefono, String direccion) {
+         int validacion = 0;
+         
+        if (nombre.equals("")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        }
+         
+        if (email.equals("")) {
+            txt_email.setBackground(Color.red);
+            validacion++;
+        }
+         
+        if (telefono.equals("")) {
+            txt_telefono.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (direccion.equals("")) {
+            txt_direccion.getText().trim();
+            validacion++;
+        }
+            
+        
+        if (validacion == 0) return true;
+        
+        return false;
+    }
+    
+    private void updateClient(String nombre, String email, String telefono, String direccion, String user ){
+        if (validateClient(nombre, email, telefono, direccion)) {
+            clientDao.updateClient(idCliente, nombre, email, telefono, direccion, user);
+            limpiar();
+        }
     }
     
     private void limpiar () {

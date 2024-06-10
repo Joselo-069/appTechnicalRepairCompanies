@@ -1,16 +1,16 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class RestaurarPassword extends javax.swing.JFrame {
 
     String user = "", user_update = "";
+    IUserDao userDao = new UserDao();
+    String password, confirmacion_password;
     
     public RestaurarPassword() {
         initComponents();
@@ -23,7 +23,6 @@ public class RestaurarPassword extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -80,23 +79,10 @@ public class RestaurarPassword extends javax.swing.JFrame {
 
     private void jButton_restaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restaurarActionPerformed
         
-        String password, confirmacion_password;
-        
         password = txt_password.getText().trim();
         confirmacion_password = txt_confirmar.getText().trim();
         
-        if (!password.equals("") && !confirmacion_password.equals("")) {
-            if (password.equals(confirmacion_password)) {
-                cambioPassword(password);
-            } else {
-                txt_confirmar.setBackground(Color.red);
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-            }
-        } else {
-            txt_password.setBackground(Color.red);
-            txt_confirmar.setBackground(Color.red);
-            JOptionPane.showMessageDialog(null, "Campos vacios");
-        }
+        validateChangePassword(password, confirmacion_password);
     }//GEN-LAST:event_jButton_restaurarActionPerformed
 
     public static void main(String args[]) {
@@ -141,21 +127,23 @@ public class RestaurarPassword extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_password;
     // End of variables declaration//GEN-END:variables
 
-    private void cambioPassword(String password){
-        /*try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("UPDATE usuarios SET password=? WHERE username= '" + user_update + "'");
-            
-            pst.setString(1, password);
-            
-            pst.executeUpdate();
-            cn.close();
-            
-            JOptionPane.showMessageDialog(null, "Restauracion exitosa.");
-            this.dispose();
-            
-        } catch (SQLException e) {
-            System.err.println("Error en cambiar la contraseña " + e);
-        }*/
+    private void validateChangePassword(String psw, String confirmPsw) {
+        if (!psw.equals("") && !confirmPsw.equals("")) {
+            if (psw.equals(confirmPsw)) {
+                changePassword(psw);
+            } else {
+                txt_confirmar.setBackground(Color.red);
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+            }
+        } else {
+            txt_password.setBackground(Color.red);
+            txt_confirmar.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Campos vacios");
+        }
+    }
+    
+    private void changePassword(String password){
+        userDao.updatePasswordUser(password, user_update);
+        this.dispose();
     }
 }

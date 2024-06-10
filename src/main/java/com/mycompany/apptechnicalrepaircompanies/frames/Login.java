@@ -2,6 +2,8 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 
 import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
+import com.mycompany.apptechnicalrepaircompanies.emuns.EstatusUser;
+import com.mycompany.apptechnicalrepaircompanies.emuns.RolUser;
 import com.mycompany.apptechnicalrepaircompanies.models.User;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,7 +14,8 @@ public class Login extends javax.swing.JFrame {
     
     public static String user = "";
     String pass = "";
-    
+    IUserDao userDao = new UserDao();
+
     public Login() {
         initComponents();
         setSize(400,550);
@@ -99,25 +102,24 @@ public class Login extends javax.swing.JFrame {
     private void btn_accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accessActionPerformed
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
-       
+
         String tipo_nivel = "";
         String estatus = "";
-        
+
         if (!user.equals("") || !pass.equals("")) {
 
-            IUserDao userDao = new UserDao();
             User userImpl = userDao.getUserByUsernamePassword(user, pass);
 
             tipo_nivel = userImpl.getTipo_nivel();
             estatus = userImpl.getEstatus();
 
-            if (tipo_nivel.equalsIgnoreCase("Administrador") && estatus.equalsIgnoreCase("Activo")) {
+            if (tipo_nivel.equalsIgnoreCase(RolUser.Administrador.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Admin().setVisible(true);
-            } else if (tipo_nivel.equalsIgnoreCase("Capturista") && estatus.equalsIgnoreCase("Activo")) {
+            } else if (tipo_nivel.equalsIgnoreCase(RolUser.Capturista.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Capturista().setVisible(true);
-            } else if (tipo_nivel.equalsIgnoreCase("Tecnico") && estatus.equalsIgnoreCase("Activo")) {
+            } else if (tipo_nivel.equalsIgnoreCase(RolUser.Tecnico.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Tecnico().setVisible(true);
             }

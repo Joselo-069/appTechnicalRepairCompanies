@@ -1,19 +1,17 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class RegistrarClientes extends javax.swing.JFrame {
 
-    String user;
-    
+    String user, nombre, email, telefono, direccion;
+    IClientDao clientDao = new ClientDao();
+
     public RegistrarClientes() {
         initComponents();
         user = Login.user;
@@ -144,35 +142,12 @@ public class RegistrarClientes extends javax.swing.JFrame {
 
     private void jButton_RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarUsuarioActionPerformed
 
-        int validacion = 0;
-        String nombre, email, telefono, direccion;
-
         email = txt_email.getText().trim();
         nombre = txt_nombre.getText().trim();
         telefono = txt_telefono.getText().trim();
         direccion = txt_direccion.getText().trim();
-
-        if(email.equals("")){
-            txt_email.setBackground(Color.red);
-            validacion++;
-        }
-
-        if(nombre.equals("")){
-            txt_nombre.setBackground(Color.red);
-            validacion++;
-        }
-
-        if(telefono.equals("")){
-            txt_telefono.setBackground(Color.red);
-            validacion++;
-        }
         
-        if(direccion.equals("")){
-            txt_direccion.setBackground(Color.red);
-            validacion++;
-        }
-
-        registrarUsuario(nombre, email, telefono, direccion);
+        registerClient(nombre, email, telefono, direccion);
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
     /**
@@ -225,28 +200,42 @@ public class RegistrarClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
     
-    private void registrarUsuario(String nombre, String email, String telefono, String direccion) {
-        /*try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO clientes VALUES (?,?,?,?,?,?)");
+    private boolean validateClient(String email, String nombre, String telefono, String direccion){
+        int validacion = 0;
+        
+        if(email.equals("")){
+            txt_email.setBackground(Color.red);
+            validacion++;
+        }
 
-            pst.setInt(1, 0);
-            pst.setString(2, nombre);
-            pst.setString(3, email);
-            pst.setString(4, telefono);
-            pst.setString(5, direccion);
-            pst.setString(6, user);
+        if(nombre.equals("")){
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        }
 
-            pst.executeUpdate();
-            cn.close();
+        if(telefono.equals("")){
+            txt_telefono.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if(direccion.equals("")){
+            txt_direccion.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (validacion == 0) return true;
+        
+        return false;
+    }
+    
+    private void registerClient(String nombre, String email, String telefono, String direccion) {
 
+        if (validateClient(email, nombre, telefono, direccion)) {
+            clientDao.registerClient(nombre, email, telefono, direccion, user);
             limpiar();
-
-            JOptionPane.showMessageDialog(null, "Registro Exitoso");
-        } catch (SQLException e) {
-            System.err.println("Error al registrar usuario" + e);
-            JOptionPane.showMessageDialog(null, "Error al registrar usuario");
-        }*/
+            this.dispose();
+        }
+        
     }
     
     private void limpiar(){

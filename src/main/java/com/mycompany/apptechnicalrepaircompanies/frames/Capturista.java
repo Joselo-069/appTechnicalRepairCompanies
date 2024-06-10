@@ -7,22 +7,25 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class Capturista extends javax.swing.JFrame {
 
-    String user, nombre_usuario;
+    String user, name_user;
     int sesion_usuario;
-    
+    IClientDao clientDao = new ClientDao();
+    IUserDao userDao = new UserDao();
+   
     public Capturista() {
         initComponents();
         user = Login.user;
@@ -38,20 +41,12 @@ public class Capturista extends javax.swing.JFrame {
         } else {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user +"'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                nombre_usuario = rs.getString("nombre_usuario");
-                jLabel1_NombreUsuario.setText("Bienvenido " + nombre_usuario);
-            }
-            
-        } catch (SQLException e) {
-            System.err.println("Error al consultar usuario");
-        }*/
+        getNameUser();
+    }
+
+    public void getNameUser() {
+        name_user = userDao.getUserByUsername(user).getNombre_usuario();
+        jLabel1_NombreUsuario.setText("Bienvenido " + name_user + " 👋");
     }
     
     @Override
@@ -120,6 +115,48 @@ public class Capturista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void printClients() {
+        Document document = new Document();
+        try {
+            String route = System.getProperty("user.home");
+            PdfWriter.getInstance(document, new FileOutputStream(route + "/Desktop/ListaClientes.pdf"));
+            // com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("");
+            //header.scaleToFit(650,100);
+            //header.setAligment(Chunk.ALING_CENTER);
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Informacion del cliente \n\n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            document.open();
+            document.add(parrafo);
+
+            PdfPTable tb = new PdfPTable(5);
+            tb.addCell("Id");
+            tb.addCell("Nombre");
+            tb.addCell("Email");
+            tb.addCell("Telefono");
+            tb.addCell("Direccion");
+
+            ArrayList<Client> clients = (ArrayList<Client>) clientDao.getListClients();
+
+            for (Client client : clients) {
+                tb.addCell(client.getId_cliente().toString());
+                tb.addCell(client.getNombre_cliente());
+                tb.addCell(client.getMail_cliente());
+                tb.addCell(client.getTel_cliente());
+                tb.addCell(client.getDir_cliente());
+            }
+            
+            document.add(tb);
+            document.close();
+            JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
+        } catch (Exception e) {
+            System.err.print("Error al generar pdf " + e);
+        }
+    }
+
     private void jButton_registrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_registrarClienteActionPerformed
        RegistrarClientes registrarCliente = new RegistrarClientes();
        registrarCliente.setVisible(true);
@@ -131,57 +168,7 @@ public class Capturista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_gestionarClientesActionPerformed
 
     private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
-       /*
-        Document document = new Document();
-       
-        try {
-            String route = System.getProperty("user.home");
-            PdfWriter.getInstance(document, new FileOutputStream(route + "/Desktop/ListaClientes.pdf"));
-            // com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("");
-            //header.scaleToFit(650,100);
-            //header.setAligment(Chunk.ALING_CENTER);
-            
-            Paragraph parrafo = new Paragraph();
-            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-            parrafo.add("Informacion del cliente \n\n");
-            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-            
-            document.open();
-            document.add(parrafo);
-            
-            PdfPTable tb = new PdfPTable(5);
-            tb.addCell("Id");
-            tb.addCell("Nombre");
-            tb.addCell("Email");
-            tb.addCell("Telefono");
-            tb.addCell("Direccion");
-            
-            try {
-                Connection cn = Conexion.conection();
-                PreparedStatement pst = cn.prepareStatement("SELECT * FROM clientes");
-                ResultSet rs = pst.executeQuery();
-                
-                if (rs.next()) {
-                    do {                        
-                        tb.addCell(rs.getString(1));
-                        tb.addCell(rs.getString(2));
-                        tb.addCell(rs.getString(3));
-                        tb.addCell(rs.getString(4));
-                        tb.addCell(rs.getString(5));
-                    } while (rs.next());
-                    document.add(tb);
-                }
-            } catch (SQLException e) {
-                System.err.println("Error al gener listado de clienetes " + e);
-            }
-            
-            document.close();
-            JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
-            
-        } catch (Exception e) {
-            System.err.print("Error al generar pdf " + e);
-        }
-        */
+       printClients();
     }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     /**

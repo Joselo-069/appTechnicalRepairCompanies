@@ -199,7 +199,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
             txt_telefono.setBackground(Color.red);
             validacion++;
         }
-        registrarUsuario(nombre, email, telefono, username, pass, permisos_cmb, user);
+        registerUser(nombre, email, telefono, username, pass, permisos_cmb, user);
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
     /**
@@ -258,8 +258,8 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
 
     private boolean existeUsername(String username) {
         IUserDao userDao = new UserDao();
-        String name_user = userDao.getUserByUsername(username);
-        if (!name_user.equals("")) {
+        String name_user = userDao.getUserByUsername(username).getNombre_usuario();
+        if (name_user != null) {
             txt_username.setBackground(Color.red);
             JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
             return true;
@@ -267,7 +267,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         return false;
     }
     
-    private void registrarUsuario(String nombre, String email, String telefono, String username, String pass, String permisos_string, String user) {
+    private void registerUser (String nombre, String email, String telefono, String username, String pass, String permisos_string, String user) {
         
         if (!existeUsername(username)) {
             IUserDao userDao = new UserDao();

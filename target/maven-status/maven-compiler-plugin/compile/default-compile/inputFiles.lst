@@ -1,5 +1,6 @@
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\GraficaEstatus.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword.java
+C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\emuns\RolUser.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\models\Client.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\Admin.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\Capturista.java
@@ -8,8 +9,10 @@ C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\j
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\models\Equipament.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\utils\Conexion.java
+C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\emuns\EstatusUser.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\GestionarUsuarios.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\models\User.java
+C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\dao\IClientDao.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\dao\UserDao.java
@@ -19,6 +22,8 @@ C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\j
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\dao\IUserDao.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios.java
+C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\dao\IEquipamentDao.java
+C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\emuns\EstatusEquipamet.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\GraficaMarcas.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\dao\EquipamentDao.java
 C:\Users\pined\Documents\NetBeansProjects\appTechnicalRepairCompanies\src\main\java\com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario.java

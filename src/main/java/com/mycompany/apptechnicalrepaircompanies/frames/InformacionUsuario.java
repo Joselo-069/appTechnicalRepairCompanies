@@ -1,18 +1,17 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
+import com.mycompany.apptechnicalrepaircompanies.models.User;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class InformacionUsuario extends javax.swing.JFrame {
-
+    
+    IUserDao userDao = new UserDao();
     String user = "", user_update = "";
     int ID;
     
@@ -29,29 +28,7 @@ public class InformacionUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         
         jLabel_titulo.setText("Informacion del usuario " + user_update);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT * FROM usuarios WHERE username = '" + user_update + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                ID = rs.getInt("id_usuario");
-                
-                txt_nombre.setText(rs.getString("nombre_usuario"));
-                txt_email.setText(rs.getString("email"));
-                txt_telefono.setText(rs.getString("telefono"));
-                txt_username.setText(rs.getString("username"));
-                txt_RegistradoPor.setText(rs.getString("registrado_por"));
-                
-                cmb_niveles.setSelectedItem(rs.getString("tipo_nivel"));
-                cmbEstatus.setSelectedItem(rs.getString("estatus"));
-            }  
-            
-            cn.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar datos!!!");
-        }*/
+        getNameUser();
     }
 
     @Override
@@ -237,8 +214,7 @@ public class InformacionUsuario extends javax.swing.JFrame {
             validacion++;
         }
         
-        existeUsername(username);
-        actualizarUsuario(nombre, email, telefono, username, permisos_string, estatus_string);
+        updateUser(nombre, email, telefono, username, permisos_string);
         
     }//GEN-LAST:event_jButton_actualizar1ActionPerformed
 
@@ -300,43 +276,38 @@ public class InformacionUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 
-    private void existeUsername(String username) {
-        try {/*
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username + "' AND NOT id_usuario = '" + ID + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                txt_username.setBackground(Color.red);
-                JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
-            }
-            
-            cn.close();*/
+    private void getNameUser() {
+        
+        User user = userDao.getUserByUsername(user_update);
 
-        } catch (Exception e) {
-            System.err.println("Error al validar nombre del usuario" + e);
-            JOptionPane.showMessageDialog(null, "Error al comparar usuario");
-        }
+        ID = user.getId_usuario();
+
+        txt_nombre.setText(user.getNombre_usuario());
+        txt_email.setText(user.getEmail());
+        txt_telefono.setText(user.getTelefono());
+        txt_username.setText(user.getUsername());
+        txt_RegistradoPor.setText(user.getRegistrado_por());
+
+        cmb_niveles.setSelectedItem(user.getTipo_nivel());
+        cmbEstatus.setSelectedItem(user.getEstatus());
     }
     
-    public void actualizarUsuario (String nombre, String email, String telefono, String username, String permisos_string, String estatus_string) {
-       /* try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("UPDATE usuarios SET nombre_usuario=?, email=?, telefono=?, username=?, tipo_nivel=?, estatus=? WHERE id_usuario= '" + ID + "'");
-            pst.setString(1, nombre);
-            pst.setString(2, email);
-            pst.setString(3, telefono);
-            pst.setString(4, username);
-            pst.setString(5, permisos_string);
-            pst.setString(6, estatus_string);
+    private boolean existeUsername(String username, int idName) {
 
-            pst.executeUpdate();
-            cn.close();
-            
-            JOptionPane.showMessageDialog(null, "Usuario Modificado");
+        String name_user = userDao.getUserByUsernameUpdate(username, idName).getNombre_usuario();
 
-        } catch (SQLException e) {
-            System.err.println("Error al actualizar " + e);
-        }*/
+        if (name_user != null) {
+            txt_username.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
+            return true;
+        }
+        return false;
+    }
+    
+    private void updateUser(String nombre, String email, String telefono, String username, String permisos_string) {
+        
+        if (!existeUsername(username, ID)) {
+            userDao.updateUser(ID, nombre, email, telefono, username, permisos_string, permisos_string);
+        }
     }
 }

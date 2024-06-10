@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.apptechnicalrepaircompanies.dao;
 
-/**
- *
- * @author ACER
- */
-public class EquipamentDao {
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
+
+public class EquipamentDao implements IEquipamentDao{
+
+    Equipament equipament = new Equipament();
+    Client client = new Client();
+
+    @Override
+    public Client getClientId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+  
     
 }

@@ -10,6 +10,7 @@ public class Admin extends javax.swing.JFrame {
 
     String user, name_user;
     public static int sesion_usuario;
+    IUserDao userDao = new UserDao();
     
     public Admin() {
         initComponents();
@@ -131,8 +132,7 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void getNameUser() {
-        IUserDao userDao = new UserDao();
-        name_user = userDao.getUserByUsername(user);
+        name_user = userDao.getUserByUsername(user).getNombre_usuario();
         jLabel1_NombreUsuario.setText("Bienvenido " + name_user + " 👋");
     }
     

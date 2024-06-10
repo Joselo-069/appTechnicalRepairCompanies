@@ -7,6 +7,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$6.class
 com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$1.class
+com\mycompany\apptechnicalrepaircompanies\dao\IEquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\AppTechnicalRepairCompanies.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$6.class
 com\mycompany\apptechnicalrepaircompanies\models\User.class
@@ -18,6 +19,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo$7.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$4.class
+com\mycompany\apptechnicalrepaircompanies\emuns\EstatusEquipamet.class
 com\mycompany\apptechnicalrepaircompanies\frames\GraficaMarcas$1.class
 com\mycompany\apptechnicalrepaircompanies\dao\EquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$3.class
@@ -27,6 +29,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$3.class
+com\mycompany\apptechnicalrepaircompanies\emuns\RolUser.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login.class
 com\mycompany\apptechnicalrepaircompanies\models\Equipament.class
 com\mycompany\apptechnicalrepaircompanies\frames\GraficaMarcas.class
@@ -64,12 +67,14 @@ com\mycompany\apptechnicalrepaircompanies\frames\Capturista$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$6.class
 com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword$2.class
 com\mycompany\apptechnicalrepaircompanies\dao\ClientDao.class
+com\mycompany\apptechnicalrepaircompanies\dao\IClientDao.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarUsuarios.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$9.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$7.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$2.class
+com\mycompany\apptechnicalrepaircompanies\emuns\EstatusUser.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$2.class

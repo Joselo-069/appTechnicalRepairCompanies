@@ -1,14 +1,13 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +17,8 @@ public class GestionarClientes extends javax.swing.JFrame {
     String user;
     public static int IdCliente = 0;
     DefaultTableModel model = new DefaultTableModel();
-
+    IClientDao clientDao = new ClientDao();
+    
     public GestionarClientes() {
         initComponents();
         
@@ -30,43 +30,45 @@ public class GestionarClientes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT * FROM clientes");
-            ResultSet rs = pst.executeQuery();
-            
-            tbClientes = new JTable(model);
-            jScrollPane1.setViewportView(tbClientes);
-            
-            model.addColumn("Id");
-            model.addColumn("Nombre");
-            model.addColumn("Email");
-            model.addColumn("Telefono");
-            model.addColumn("Modificado por");
-            
-            while (rs.next()) {
-                Object[] fila = new Object[5];
-                for (int i = 0; i < 5; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                model.addRow(fila);
-            }
-            
-            cn.close();
-            
-        } catch (SQLException e) {
-            System.err.println("Error en el llenado de la tabla");
+        
+        listClients();
+    }
+    
+    private void listClients(){
+        
+        ArrayList<Client> clients = (ArrayList<Client>) clientDao.getListClients();
+
+        tbClientes = new JTable(model);
+        jScrollPane1.setViewportView(tbClientes);
+
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Email");
+        model.addColumn("Telefono");
+        model.addColumn("Modificado por");
+
+        for (Client client : clients) {
+            Object[] file = new Object[5];
+            file[0] = client.getId_cliente();
+            file[1] = client.getNombre_cliente();
+            file[2] = client.getMail_cliente();
+            file[3] = client.getTel_cliente();
+            file[4] = client.getUltima_modificacion();
+            model.addRow(file);
         }
-        */
+        
+        selectFileTable();
+    }
+    
+    private void selectFileTable() {
         tbClientes.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 int fila_point = tbClientes.rowAtPoint(e.getPoint());
                 int columna_point = 0;
-                
+
                 if (fila_point > -1) {
-                    IdCliente = (int)model.getValueAt(fila_point, columna_point);
+                    IdCliente = (int) model.getValueAt(fila_point, columna_point);
                     InformacionCliente info = new InformacionCliente();
                     info.setVisible(true);
                 }
@@ -80,7 +82,6 @@ public class GestionarClientes extends javax.swing.JFrame {
         return retValue;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
