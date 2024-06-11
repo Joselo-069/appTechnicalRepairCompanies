@@ -1,12 +1,14 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.emuns.EstatusEquipamet;
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
@@ -15,23 +17,14 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     int idCliente = 0;
     String user = "", nom_cliente = "";
-    
+    IEquipamentDao equipamentDao = new EquipamentDao();
+    IClientDao clientDao = new ClientDao();
+
     public RegistrarEquipo() {
         initComponents();
         user = Login.user;
         idCliente = GestionarClientes.IdCliente;
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idCliente + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                nom_cliente = rs.getString("nombre_cliente");
-            }
-        } catch (Exception e) {
-            System.err.print("Error al conectar con la base de datos" + e);
-        }*/
+        nom_cliente = getClient();
         
         setSize(630,480);
         setResizable(false);
@@ -42,11 +35,47 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         txt_nombreCliente.setText(nom_cliente);
     }
 
-    
     @Override
     public Image getIconImage(){
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
+    }
+
+    public String getClient() {
+        Client cli = clientDao.getClientId(idCliente);
+        return cli.getNombre_cliente();
+    } 
+    
+    public void registerEquipament(String tipoEquipo, String marca, String modelo, String numSerie, String diaIngreso, String mesIngreso, String annioIngreso, String observaciones, String estatus, String user){
+      
+        if (validateEquipament(modelo, numSerie, observaciones)) {
+           equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+        }
+    }
+    
+    public boolean validateEquipament (String modelo, String num_serie, String observaciones){
+        int validacion = 0;
+
+        if (modelo.equals("")) {
+            txt_modelo.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (num_serie.equals("")) {
+            txt_serie.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (observaciones.equals("")) {
+            txtp_observaciones.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (validacion == 0) return true;
+        
+        return false;
     }
     
     @SuppressWarnings("unchecked")
@@ -170,7 +199,6 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     private void jButton_equipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_equipoActionPerformed
         
-        int validacion = 0;
         String tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, estatus, observaciones;
         
         tipo_equipo = cmb_tipo.getSelectedItem().toString();
@@ -178,7 +206,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         modelo = txt_modelo.getText().trim();
         num_serie = txt_serie.getText().trim();
         observaciones = txtp_observaciones.getText().trim();
-        estatus = "Nuevo ingreso";
+        estatus = EstatusEquipamet.NuevoIngreso.name();
         
         Calendar calendar = Calendar.getInstance();
         
@@ -186,55 +214,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         mes_ingreso = Integer.toString(calendar.get(Calendar.MONTH));
         annio_ingreso = Integer.toString(calendar.get(Calendar.YEAR));
 
-        if (modelo.equals("")) {
-            txt_modelo.setBackground(Color.red);
-            validacion++;
-        }
-
-        if (num_serie.equals("")) {
-            txt_serie.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (observaciones.equals("")) {
-            txtp_observaciones.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (validacion == 0) {
-            /*try {
-                Connection cn = Conexion.conection();
-                PreparedStatement pst = cn.prepareStatement("INSERT INTO equipos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                
-                pst.setInt(1,0);
-                pst.setInt(2,idCliente);
-                pst.setString(3, tipo_equipo);
-                pst.setString(4,marca);
-                pst.setString(5,modelo);
-                pst.setString(6,num_serie);
-                pst.setString(7,dia_ingreso);
-                pst.setString(8,mes_ingreso);
-                pst.setString(9,annio_ingreso);
-                pst.setString(10,observaciones);
-                pst.setString(11,estatus);
-                pst.setString(12,user);
-                pst.setString(13,"");
-                pst.setString(14,"");
-                
-                pst.executeUpdate();
-                cn.close();
-                
-                JOptionPane.showMessageDialog(null, "Registro exitoso");
-                this.dispose();
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al reqistrar equipo");
-            }*/
-        } else {
-            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-        }
-
-        
+        registerEquipament(tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus, user);        
     }//GEN-LAST:event_jButton_equipoActionPerformed
 
     /**

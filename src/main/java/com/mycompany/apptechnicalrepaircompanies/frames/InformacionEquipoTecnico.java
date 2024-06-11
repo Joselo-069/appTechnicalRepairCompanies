@@ -1,62 +1,67 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class InformacionEquipoTecnico extends javax.swing.JFrame {
 
     int idEquipament = 0;
     String user = "";
-    
+    IEquipamentDao equipamentDao = new EquipamentDao();
+
     public InformacionEquipoTecnico() {
         initComponents();
         user = Login.user;
         idEquipament = GestionarEquipos.IdEquipo;
-/*
-        try {
-            Connection cn1 = Conexion.conection();
-            PreparedStatement pst1 = cn1.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipament + "'");
-            ResultSet rs1 = pst1.executeQuery();
-            
-            if (rs1.next()) {
-                cmb_tipo.setSelectedItem(rs1.getString("tipo_equipo"));
-                cmb_marca.setSelectedItem(rs1.getString("marca"));
-                cmb_estatus.setSelectedItem(rs1.getString("tipo_equipo"));
-                txt_modelo.setText(rs1.getString("modelo"));
-                txt_serie.setText(rs1.getString("num_serie"));
-                txt_modificaion.setText(rs1.getString("ultima_modificacion"));
-                
-                String dia = "", mes = "", annio = "";
-                dia = rs1.getString("dia_ingreso");
-                mes = rs1.getString("mes_ingreso");
-                annio = rs1.getString("annio_ingreso");
-                txt_fecha.setText(dia + " del " + mes + " del " + annio);
-                
-                txtp_observaciones.setText(rs1.getString("observaciones"));
-                txtp_comentarios.setText(rs1.getString("comentarios_tecnicos"));
-                
-                jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + rs1.getString("revision_tecnica_de"));
-            }
-            //cn.close();
-        } catch (Exception e) {
-            System.err.print("error al consultar equipo InformacionEquipoTecnico " + e);
-        }
-        */
+
         setTitle("Equipo registrado con el ID " + idEquipament + " - Sesion de " + user); 
         setSize(670, 550);
         setResizable(false);
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        getDetailEquipament();
     }
 
+    private void clean(){
+        txt_nombreCliente.setText("");
+        txt_fecha.setText("");
+        txt_modelo.setText("");
+        txt_serie.setText("");
+        txtp_observaciones.setText("");
+    }
+    
+    public void getDetailEquipament() {
+        Equipament equipament = equipamentDao.getDetailEquipament(idEquipament);
+
+        cmb_tipo.setSelectedItem(equipament.getTipo_equipo());
+        cmb_marca.setSelectedItem(equipament.getMarca());
+        cmb_estatus.setSelectedItem(equipament.getTipo_equipo());
+        txt_modelo.setText(equipament.getModelo());
+        txt_serie.setText(equipament.getNum_serie());
+        txt_modificaion.setText(equipament.getUltima_modificacion());
+
+        String dia = "", mes = "", annio = "";
+        dia = equipament.getDia_ingreso();
+        mes = equipament.getMes_ingreso();
+        annio = equipament.getAnnio_ingreso();
+        txt_fecha.setText(dia + " del " + mes + " del " + annio);
+
+        txtp_observaciones.setText(equipament.getObservaciones());
+        txtp_comentarios.setText(equipament.getComentarios_tecnicos());
+
+        jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + equipament.getRevision_tecnica_de());
+    }
+  
+    public void updatEquipamentTecnico(int idEquipament, String estatus, String comentarios, String tecnico){
+        equipamentDao.updateEquipamentTecnico(idEquipament, estatus, comentarios, tecnico);
+        this.dispose();
+    }
+    
     @Override
     public Image getIconImage(){
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
@@ -250,27 +255,7 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         estatus = cmb_estatus.getSelectedItem().toString();
         comentarios = txtp_comentarios.getText();
         tecnico = user;
-        
-        System.err.println("id del equipo " + idEquipament);
-/*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("UPDATE equipos SET estatus=?, comentarios_tecnicos=?, revision_tecnica_de=? WHERE id_equipo = '" + idEquipament + "'");
-            
-            pst.setString(1, estatus);
-            pst.setString(2, comentarios);
-            pst.setString(3, tecnico);
-
-            pst.executeUpdate();
-            cn.close();
-            
-            JOptionPane.showMessageDialog(null, "Actualizacion exitosa.");
-            this.dispose();
-            
-        } catch (SQLException e) {
-            System.err.println("Error en actualizar equipo " + e);
-        }
-        */
+        updatEquipamentTecnico(idEquipament, estatus, comentarios, tecnico);
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void txt_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaActionPerformed
@@ -347,11 +332,4 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
     private javax.swing.JTextPane txtp_observaciones;
     // End of variables declaration//GEN-END:variables
 
-    private void clean(){
-        txt_nombreCliente.setText("");
-        txt_fecha.setText("");
-        txt_modelo.setText("");
-        txt_serie.setText("");
-        txtp_observaciones.setText("");
-    }
 }

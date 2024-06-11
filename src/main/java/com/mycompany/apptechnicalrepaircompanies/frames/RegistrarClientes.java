@@ -25,11 +25,58 @@ public class RegistrarClientes extends javax.swing.JFrame {
     }
 
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
     }
-    
+
+    private boolean validateClient(String email, String nombre, String telefono, String direccion) {
+        int validacion = 0;
+
+        if (email.equals("")) {
+            txt_email.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (nombre.equals("")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (telefono.equals("")) {
+            txt_telefono.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (direccion.equals("")) {
+            txt_direccion.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (validacion == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void registerClient(String nombre, String email, String telefono, String direccion) {
+
+        if (validateClient(email, nombre, telefono, direccion)) {
+            clientDao.registerClient(nombre, email, telefono, direccion, user);
+            clean();
+            this.dispose();
+        }
+
+    }
+
+    private void clean() {
+        txt_nombre.setText("");
+        txt_email.setText("");
+        txt_direccion.setText("");
+        txt_telefono.setText("");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -200,48 +247,4 @@ public class RegistrarClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
     
-    private boolean validateClient(String email, String nombre, String telefono, String direccion){
-        int validacion = 0;
-        
-        if(email.equals("")){
-            txt_email.setBackground(Color.red);
-            validacion++;
-        }
-
-        if(nombre.equals("")){
-            txt_nombre.setBackground(Color.red);
-            validacion++;
-        }
-
-        if(telefono.equals("")){
-            txt_telefono.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if(direccion.equals("")){
-            txt_direccion.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (validacion == 0) return true;
-        
-        return false;
-    }
-    
-    private void registerClient(String nombre, String email, String telefono, String direccion) {
-
-        if (validateClient(email, nombre, telefono, direccion)) {
-            clientDao.registerClient(nombre, email, telefono, direccion, user);
-            limpiar();
-            this.dispose();
-        }
-        
-    }
-    
-    private void limpiar(){
-        txt_nombre.setText("");
-        txt_email.setText("");
-        txt_direccion.setText("");
-        txt_telefono.setText("");
-    }
 }

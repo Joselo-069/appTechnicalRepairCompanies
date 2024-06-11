@@ -47,6 +47,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\GraficaEstatus.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$2.class
 com\mycompany\apptechnicalrepaircompanies\dao\UserDao.class
+com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarClientes$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$1.class

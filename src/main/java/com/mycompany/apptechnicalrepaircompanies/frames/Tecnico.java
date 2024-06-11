@@ -1,23 +1,22 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.WindowConstants;
 
 public class Tecnico extends javax.swing.JFrame {
 
-    String user, nombre_usuario;
+    String user, name_user;
     int sesion_usuario;
+    IUserDao userDao = new UserDao();
     
     public Tecnico() {
         initComponents();
         user = Login.user;
         sesion_usuario = Admin.sesion_usuario;
+
         
         setSize(550,300);
         setResizable(false);
@@ -29,20 +28,8 @@ public class Tecnico extends javax.swing.JFrame {
         } else {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user +"'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                nombre_usuario = rs.getString("nombre_usuario");
-                jLabel1_NombreUsuario.setText("Bienvenido " + nombre_usuario);
-            }
-            
-        } catch (SQLException e) {
-            System.err.println("Error al consultar nombre de tecnico");
-        }*/
+        
+        getNameUser();
     }
     
     @Override
@@ -51,6 +38,11 @@ public class Tecnico extends javax.swing.JFrame {
         return retValue;
     }
 
+    public void getNameUser() {
+        name_user = userDao.getUserByUsername(user).getNombre_usuario();
+        jLabel1_NombreUsuario.setText("Bienvenido " + name_user + " 👋");
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

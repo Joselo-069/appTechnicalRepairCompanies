@@ -1,13 +1,14 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -16,54 +17,18 @@ public class InformacionEquipo extends javax.swing.JFrame {
     int idClient, idEquipament;
     String user = "", nom_cli = "";
     
+    IClientDao clientDao = new ClientDao();
+    IEquipamentDao equipamentDao = new EquipamentDao();
+    
     public InformacionEquipo() {
         initComponents();
         user = Login.user;
         idEquipament = InformacionCliente.idEquipo;
         idClient = GestionarClientes.IdCliente;
-/*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClient + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                nom_cli = rs.getString("nombre_cliente");
-            }
-            // cn.close();
-        } catch (Exception e) {
-            System.err.print("error al consultar cliente" + e);
-        }
-      
-        try {
-            Connection cn1 = Conexion.conection();
-            PreparedStatement pst1 = cn1.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipament + "'");
-            ResultSet rs1 = pst1.executeQuery();
-            
-            if (rs1.next()) {
-                cmb_tipo.setSelectedItem(rs1.getString("tipo_equipo"));
-                cmb_marca.setSelectedItem(rs1.getString("marca"));
-                cmb_estatus.setSelectedItem(rs1.getString("tipo_equipo"));
-                txt_modelo.setText(rs1.getString("modelo"));
-                txt_serie.setText(rs1.getString("num_serie"));
-                txt_modificaion.setText(rs1.getString("ultima_modificacion"));
-                
-                String dia = "", mes = "", annio = "";
-                dia = rs1.getString("dia_ingreso");
-                mes = rs1.getString("mes_ingreso");
-                annio = rs1.getString("annio_ingreso");
-                txt_fecha.setText(dia + " del " + mes + " del " + annio);
-                
-                txtp_observaciones.setText(rs1.getString("obvervaciones"));
-                txtp_comentarios.setText(rs1.getString("comentarios_tecnicos"));
-                
-                jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + rs1.getString("revision_tecnica_de"));
-            }
-            //cn.close();
-        } catch (Exception e) {
-            System.err.print("error al consultar equipo " + e);
-        }
- */       
+        
+        nom_cli = getClient();
+        getDetailEquipament();
+        
         setTitle("Equipo del cliente " + nom_cli);
         setSize(670, 550);
         setResizable(false);
@@ -72,7 +37,6 @@ public class InformacionEquipo extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_nombreCliente.setText(nom_cli);
-       System.out.print("este es un errro " + idEquipament);
 
     }
 
@@ -80,6 +44,76 @@ public class InformacionEquipo extends javax.swing.JFrame {
     public Image getIconImage(){
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
+    }
+    
+    public String getClient() {
+        Client cli = clientDao.getClientId(idClient);
+        return cli.getNombre_cliente();
+    } 
+    
+    public void getDetailEquipament() {
+        Equipament equipament = equipamentDao.getDetailEquipament(idEquipament);
+
+        cmb_tipo.setSelectedItem(equipament.getTipo_equipo());
+        cmb_marca.setSelectedItem(equipament.getMarca());
+        cmb_estatus.setSelectedItem(equipament.getTipo_equipo());
+        txt_modelo.setText(equipament.getModelo());
+        txt_serie.setText(equipament.getNum_serie());
+        txt_modificaion.setText(equipament.getUltima_modificacion());
+
+        String dia = "", mes = "", annio = "";
+        dia = equipament.getDia_ingreso();
+        mes = equipament.getMes_ingreso();
+        annio = equipament.getAnnio_ingreso();
+        txt_fecha.setText(dia + " del " + mes + " del " + annio);
+
+        txtp_observaciones.setText(equipament.getObservaciones());
+        txtp_comentarios.setText(equipament.getComentarios_tecnicos());
+
+        jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + equipament.getRevision_tecnica_de());
+    }
+    
+    public boolean validateEquipament(String modelo, String num_serie, String observaciones) {
+        int validacion = 0;
+
+        if (modelo.equals("")) {
+            txt_modelo.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (num_serie.equals("")) {
+            txt_serie.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (observaciones.equals("")) {
+            txtp_observaciones.setBackground(Color.red);
+            validacion++;
+        }
+
+        if (validacion == 0) return true;
+
+        return false;
+    }
+    
+    public void updateEquipament(int idEquipo, String tipo_equipo, String marca, String modelo, String num_serie, String observaciones, String estatus, String user) {
+        
+        if(validateEquipament(modelo, num_serie, observaciones)){
+            equipamentDao.updateEquipament(idEquipo, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);        
+            clean();
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+        }
+        
+    }
+    
+    private void clean(){
+        txt_nombreCliente.setText("");
+        txt_fecha.setText("");
+        txt_modelo.setText("");
+        txt_serie.setText("");
+        txtp_observaciones.setText("");
     }
     
     @SuppressWarnings("unchecked")
@@ -263,7 +297,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_serieActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        int validacion = 0;
+
         String tipo_equipo, marca, modelo, num_serie, estatus, observaciones;
         
         tipo_equipo = cmb_tipo.getSelectedItem().toString();
@@ -274,47 +308,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         num_serie = txt_serie.getText().trim();
         observaciones = txtp_observaciones.getText();
         
-        if (modelo.equals("")) {
-            txt_modelo.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (num_serie.equals("")) {
-            txt_serie.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (observaciones.equals("")) {
-            txtp_observaciones.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (validacion == 0) {/*
-            try {
-                Connection cn = Conexion.conection();
-                PreparedStatement pst = cn.prepareStatement("UPDATE equipos set tipo_equipo=?, marca=?, modelo=?, num_serie=?, observaciones=?, estatus=?, ultima_modificacion=? WHERE id_equipo = '" + idEquipament +"'");
-                
-                pst.setString(1, tipo_equipo);
-                pst.setString(2, marca);
-                pst.setString(3, modelo);
-                pst.setString(4, num_serie);
-                pst.setString(5, observaciones);
-                pst.setString(6, estatus);
-                pst.setString(7, user);
-
-                pst.executeUpdate();
-                cn.close();
-                
-                clean();
-                
-                JOptionPane.showMessageDialog(null, "Actualizacion correcta.");
-                this.dispose();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al actualizar equipo");
-            }*/
-        } else {
-            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-        }
+        updateEquipament(idEquipament, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void txt_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaActionPerformed
@@ -389,11 +383,4 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JTextPane txtp_observaciones;
     // End of variables declaration//GEN-END:variables
 
-    private void clean(){
-        txt_nombreCliente.setText("");
-        txt_fecha.setText("");
-        txt_modelo.setText("");
-        txt_serie.setText("");
-        txtp_observaciones.setText("");
-    }
 }

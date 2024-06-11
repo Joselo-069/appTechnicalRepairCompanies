@@ -15,7 +15,6 @@ public class UserDao implements IUserDao{
 
     @Override
     public User getUserByUsernamePassword(String userName, String pass) {
-        // User user = new User();
         try {
             base.prest = base.conec.prepareStatement(SQL_USER_DETAIL_LOGIN);
             base.prest.setString(1, userName);
@@ -50,7 +49,6 @@ public class UserDao implements IUserDao{
 
     @Override
     public User getUserByUsername(String userName) {
-        //User user = new User();
         try {
             
             base.prest = base.conec.prepareStatement(SQL_USER_DETAIL_USERNAME);
@@ -136,7 +134,6 @@ public class UserDao implements IUserDao{
 
     @Override
     public User getUserByUsernameUpdate(String userName, int idUser) {
-        //User user = new User();
         try {
 
             base.prest = base.conec.prepareStatement(SQL_USER_DETAIL_UPDATE);
@@ -169,7 +166,6 @@ public class UserDao implements IUserDao{
 
     @Override
     public void updateUser(int idUser, String nombre, String email, String telefono, String username, String permisos_string, String estatus_string) {
-
         try {
             
             base.prest = base.conec.prepareStatement(SQL_USER_UPDATE);

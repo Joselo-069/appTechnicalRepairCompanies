@@ -32,9 +32,44 @@ public class InformacionUsuario extends javax.swing.JFrame {
     }
 
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
+    }
+
+    private void getNameUser() {
+
+        User user = userDao.getUserByUsername(user_update);
+
+        ID = user.getId_usuario();
+
+        txt_nombre.setText(user.getNombre_usuario());
+        txt_email.setText(user.getEmail());
+        txt_telefono.setText(user.getTelefono());
+        txt_username.setText(user.getUsername());
+        txt_RegistradoPor.setText(user.getRegistrado_por());
+
+        cmb_niveles.setSelectedItem(user.getTipo_nivel());
+        cmbEstatus.setSelectedItem(user.getEstatus());
+    }
+
+    private boolean existeUsername(String username, int idName) {
+
+        String name_user = userDao.getUserByUsernameUpdate(username, idName).getNombre_usuario();
+
+        if (name_user != null) {
+            txt_username.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
+            return true;
+        }
+        return false;
+    }
+
+    private void updateUser(String nombre, String email, String telefono, String username, String permisos_string) {
+
+        if (!existeUsername(username, ID)) {
+            userDao.updateUser(ID, nombre, email, telefono, username, permisos_string, permisos_string);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -276,38 +311,4 @@ public class InformacionUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 
-    private void getNameUser() {
-        
-        User user = userDao.getUserByUsername(user_update);
-
-        ID = user.getId_usuario();
-
-        txt_nombre.setText(user.getNombre_usuario());
-        txt_email.setText(user.getEmail());
-        txt_telefono.setText(user.getTelefono());
-        txt_username.setText(user.getUsername());
-        txt_RegistradoPor.setText(user.getRegistrado_por());
-
-        cmb_niveles.setSelectedItem(user.getTipo_nivel());
-        cmbEstatus.setSelectedItem(user.getEstatus());
-    }
-    
-    private boolean existeUsername(String username, int idName) {
-
-        String name_user = userDao.getUserByUsernameUpdate(username, idName).getNombre_usuario();
-
-        if (name_user != null) {
-            txt_username.setBackground(Color.red);
-            JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
-            return true;
-        }
-        return false;
-    }
-    
-    private void updateUser(String nombre, String email, String telefono, String username, String permisos_string) {
-        
-        if (!existeUsername(username, ID)) {
-            userDao.updateUser(ID, nombre, email, telefono, username, permisos_string, permisos_string);
-        }
-    }
 }

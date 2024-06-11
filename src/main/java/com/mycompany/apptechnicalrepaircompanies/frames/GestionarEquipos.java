@@ -1,14 +1,13 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -17,8 +16,10 @@ public class GestionarEquipos extends javax.swing.JFrame {
 
     String user;
     public static int IdEquipo = 0;
+    
     DefaultTableModel model = new DefaultTableModel();
-
+    IEquipamentDao equipament = new EquipamentDao();
+    
     public GestionarEquipos() {
         initComponents();
         
@@ -30,35 +31,8 @@ public class GestionarEquipos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos");
-            ResultSet rs = pst.executeQuery();
-            
-            tbEquipos = new JTable(model);
-            jScrollEquipos.setViewportView(tbEquipos);
-            
-            model.addColumn("Id");
-            model.addColumn("Tipo");
-            model.addColumn("Marca");
-            model.addColumn("Estatus");
-            
-            while (rs.next()) {
-                Object[] fila = new Object[4];
-                for (int i = 0; i < 4; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                model.addRow(fila);
-            }
-            
-            cn.close();
-            
-        } catch (SQLException e) {
-            System.err.println("Error en el llenado de la tabla");
-        }*/
-        
-        ObtenerDatosTabla();
+
+        listEquipament();
     }
     
     @Override
@@ -67,7 +41,66 @@ public class GestionarEquipos extends javax.swing.JFrame {
         return retValue;
     }
 
+    public void listEquipament() {
+        ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipaments();
+
+        tbEquipos = new JTable(model);
+        jScrollEquipos.setViewportView(tbEquipos);
+
+        model.addColumn("Id");
+        model.addColumn("Tipo");
+        model.addColumn("Marca");
+        model.addColumn("Estatus");
+
+        for (Equipament equipament : equipaments) {
+            Object[] file = new Object[4];
+            file[0] = equipament.getId_equipo();
+            file[1] = equipament.getTipo_equipo();
+            file[2] = equipament.getMarca();
+            file[3] = equipament.getEstatus();
+            model.addRow(file);
+        }
+        
+        ObtenerDatosTabla();
+    }
     
+    public void listEquipamentSearch(String status) {
+        ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipamentsSearch(status);
+
+        tbEquipos = new JTable(model);
+        jScrollEquipos.setViewportView(tbEquipos);
+
+        model.addColumn("Id");
+        model.addColumn("Tipo");
+        model.addColumn("Marca");
+        model.addColumn("Estatus");
+
+        for (Equipament equipament : equipaments) {
+            Object[] file = new Object[4];
+            file[0] = equipament.getId_equipo();
+            file[1] = equipament.getTipo_equipo();
+            file[2] = equipament.getMarca();
+            file[3] = equipament.getEstatus();
+            model.addRow(file);
+        }
+    }
+
+    public void ObtenerDatosTabla() {
+        tbEquipos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = tbEquipos.rowAtPoint(e.getPoint());
+                int columna_point = 0;
+
+                if (fila_point > -1) {
+                    IdEquipo = (int) model.getValueAt(fila_point, columna_point);
+                    InformacionEquipoTecnico info = new InformacionEquipoTecnico();
+                    info.setVisible(true);
+                }
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,6 +130,11 @@ public class GestionarEquipos extends javax.swing.JFrame {
         jScrollEquipos.setViewportView(tbEquipos);
 
         cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Nuevo ingreso", "No reparado", "En revision", "Reparado", "Entregado" }));
+        cmb_estatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_estatusActionPerformed(evt);
+            }
+        });
 
         btn_mostrar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btn_mostrar.setText("Mostrar");
@@ -146,45 +184,19 @@ public class GestionarEquipos extends javax.swing.JFrame {
 
     private void btn_mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrarActionPerformed
         
-        String seleccion = cmb_estatus.getSelectedItem().toString();
-        String query = "";
+        String select = cmb_estatus.getSelectedItem().toString();
+        
+        String selectName = select == "Todos" ? "" : select;
         
         model.setRowCount(0);
         model.setColumnCount(0);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            
-            if (seleccion.equalsIgnoreCase("Todos")) {
-                query = "SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos";
-            } else {
-                query = "SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE estatus = '" + seleccion + "'";
-            }
-            
-            PreparedStatement pst = cn.prepareStatement(query);
-            ResultSet rs = pst.executeQuery();
-            
-            tbEquipos = new JTable(model);
-            jScrollEquipos.setViewportView(tbEquipos);
-            
-            model.addColumn("Id");
-            model.addColumn("Tipo");
-            model.addColumn("Marca");
-            model.addColumn("Estatus");
-            
-            while (rs.next()) {                
-                Object [] fila = new Object[4];
-                for (int i=0; i<4;i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                model.addRow(fila);
-            }
-            cn.close();
-        } catch (SQLException e) {
-            System.err.print("Error al recuperar registros");
-        }*/
-        ObtenerDatosTabla();
+        
+        listEquipamentSearch(selectName);        
     }//GEN-LAST:event_btn_mostrarActionPerformed
+
+    private void cmb_estatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_estatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_estatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,22 +244,4 @@ public class GestionarEquipos extends javax.swing.JFrame {
     private javax.swing.JTable tbEquipos;
     // End of variables declaration//GEN-END:variables
 
-    public void ObtenerDatosTabla() {                
-        tbEquipos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                int fila_point = tbEquipos.rowAtPoint(e.getPoint());
-                int columna_point = 0;
-                
-                if (fila_point > -1) {
-                    IdEquipo = (int)model.getValueAt(fila_point, columna_point);
-                    /*
-                    InformacionCliente info = new InformacionCliente();
-                    info.setVisible(true);*/
-                    InformacionEquipoTecnico info = new InformacionEquipoTecnico();
-                    info.setVisible(true);
-                }
-            }
-        });
-    }
 }

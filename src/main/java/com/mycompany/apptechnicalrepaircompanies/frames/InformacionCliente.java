@@ -9,8 +9,11 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.Image;
@@ -18,7 +21,9 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +31,8 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     IClientDao clientDao = new ClientDao();
+    IEquipamentDao equipamentDao = new EquipamentDao();
+    
     int idCliente;
     public static int idEquipo = 0;
     String user = "";
@@ -42,8 +49,8 @@ public class InformacionCliente extends javax.swing.JFrame {
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         txt_modificacion.disable();
-        selectClient();
-        selectEquipament();
+        listClient();
+        listEquipament();
     }
     
     @Override
@@ -195,6 +202,166 @@ public class InformacionCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listClient() {
+        Client client = clientDao.getClientId(idCliente);
+        setTitle("Informacion del usuario " + client.getNombre_cliente() + " - Sesion de " + user);
+        jLabel_titulo.setText("Informacion del cliente " + client.getNombre_cliente());
+
+        txt_nombre.setText(client.getNombre_cliente());
+        txt_email.setText(client.getMail_cliente());
+        txt_telefono.setText(client.getTel_cliente());
+        txt_direccion.setText(client.getDir_cliente());
+        txt_modificacion.setText(client.getUltima_modificacion());
+    }
+    
+    private void listEquipament() {
+        ArrayList<Equipament> equimanets = (ArrayList<Equipament>) equipamentDao.getEquimanentId(idCliente);
+        tb_equipos = new JTable(model);
+        scroll_equipos.setViewportView(tb_equipos);
+
+        model.addColumn("Id");
+        model.addColumn("Tipo de equipos");
+        model.addColumn("Marca");
+        model.addColumn("Estatus");
+        
+        for (Equipament equipament : equimanets) {
+            Object[] file = new Object[4];
+            file[0] = equipament.getId_equipo();
+            file[1] = equipament.getTipo_equipo();
+            file[2] = equipament.getMarca();
+            file[3] = equipament.getEstatus();
+            model.addRow(file);
+        }
+        selectEquipament();
+    }
+    
+    private void selectEquipament() {
+        tb_equipos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila_point = tb_equipos.rowAtPoint(e.getPoint());
+                int columna_point = 0;
+
+                if (fila_point > -1) {
+                    idEquipo = (int) model.getValueAt(fila_point, columna_point);
+                    InformacionEquipo info = new InformacionEquipo();
+                    info.setVisible(true);
+                }
+            }
+        });
+    }
+    
+    private boolean validateClient(String nombre, String email, String telefono, String direccion) {
+         int validacion = 0;
+         
+        if (nombre.equals("")) {
+            txt_nombre.setBackground(Color.red);
+            validacion++;
+        }
+         
+        if (email.equals("")) {
+            txt_email.setBackground(Color.red);
+            validacion++;
+        }
+         
+        if (telefono.equals("")) {
+            txt_telefono.setBackground(Color.red);
+            validacion++;
+        }
+        
+        if (direccion.equals("")) {
+            txt_direccion.getText().trim();
+            validacion++;
+        }
+            
+        
+        if (validacion == 0) return true;
+        
+        return false;
+    }
+    
+    private void updateClient(String nombre, String email, String telefono, String direccion, String user ){
+        if (validateClient(nombre, email, telefono, direccion)) {
+            clientDao.updateClient(idCliente, nombre, email, telefono, direccion, user);
+            limpiar();
+        }
+    }
+    
+    private void limpiar () {
+        txt_nombre.setText("");
+        txt_email.setText("");
+        txt_telefono.setText("");
+        txt_direccion.setText("");
+    }
+
+    private void printClientsAndEquipament() {
+        Document document = new Document();
+
+        try {
+            String route = System.getProperty("user.home");
+            PdfWriter.getInstance(document, new FileOutputStream(route + "/Desktop/prueba.pdf"));
+
+            // com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("BannerPDF.jpg");
+            // header.scaleToFit(650,1000);
+            // header.setAlignment(Chunk.ALIGN_CENTER);
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Informacion del cliente \n\n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            document.open();
+            // document.add(header);
+            document.add(parrafo);
+
+            PdfPTable tbClient = new PdfPTable(5);
+            tbClient.addCell("Id");
+            tbClient.addCell("Nombre");
+            tbClient.addCell("Email");
+            tbClient.addCell("Telefono");
+            tbClient.addCell("Direccion");
+
+            Client cli = clientDao.getClientId(idCliente);
+
+            tbClient.addCell(cli.getId_cliente().toString());
+            tbClient.addCell(cli.getNombre_cliente());
+            tbClient.addCell(cli.getMail_cliente());
+            tbClient.addCell(cli.getTel_cliente());
+            tbClient.addCell(cli.getDir_cliente());
+
+            document.add(tbClient);
+
+            Paragraph parrafo2 = new Paragraph();
+            parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo2.add("\n\n Equipos registrados. \n\n");
+            parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            document.add(parrafo2);
+
+            PdfPTable tbEquipament = new PdfPTable(4);
+            tbEquipament.addCell("Id");
+            tbEquipament.addCell("Tipo");
+            tbEquipament.addCell("Marca");
+            tbEquipament.addCell("Estatus");
+
+            ArrayList<Equipament> equimanets = (ArrayList<Equipament>) equipamentDao.getEquimanentId(idCliente);
+
+            for (Equipament eq : equimanets) {
+                tbEquipament.addCell(eq.getId_equipo().toString());
+                tbEquipament.addCell(eq.getTipo_equipo());
+                tbEquipament.addCell(eq.getMarca());
+                tbEquipament.addCell(eq.getEstatus());
+            }
+
+            document.add(tbEquipament);
+            document.close();
+            JOptionPane.showMessageDialog(null, "Reporte creado correctamente.");
+
+        } catch (DocumentException | IOException e) {
+            System.err.println("Error en pdf ruta de imagen " + e);
+            JOptionPane.showMessageDialog(null, "Error al generar PDF");
+        }
+    }
+    
     private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombreActionPerformed
@@ -230,95 +397,7 @@ public class InformacionCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_equipoActionPerformed
 
     private void jButton_ImprimeReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimeReporteActionPerformed
-        Document document = new Document();
-        
-        try {
-            String route = System.getProperty("user.home");
-            PdfWriter.getInstance(document, new FileOutputStream(route + "/Desktop/" + txt_nombre.getText().trim() + ".pdf"));
-            
-            // com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("BannerPDF.jpg");
-            
-            // header.scaleToFit(650,1000);
-            // header.setAlignment(Chunk.ALIGN_CENTER);
-            
-            Paragraph parrafo = new Paragraph();
-            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-            parrafo.add("Informacion del cliente \n\n");
-            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-            
-            document.open();
-            // document.add(header);
-            document.add(parrafo);
-            
-            PdfPTable tbClient = new PdfPTable(5);
-            tbClient.addCell("Id");
-            tbClient.addCell("Nombre");
-            tbClient.addCell("Email");
-            tbClient.addCell("Telefono");
-            tbClient.addCell("Direccion");
-            /*
-            try {
-                
-                Connection cn = Conexion.conection();
-                PreparedStatement pst = cn.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idCliente + "'");
-                ResultSet rs = pst.executeQuery();
-                
-                if (rs.next()) {
-                    do {                        
-                        tbClient.addCell(rs.getString(1));
-                        tbClient.addCell(rs.getString(2));
-                        tbClient.addCell(rs.getString(3));
-                        tbClient.addCell(rs.getString(4));
-                        tbClient.addCell(rs.getString(5));
-                    } while (rs.next());
-                    
-                    document.add(tbClient);
-                }
-                
-                Paragraph parrafo2 = new Paragraph();
-                parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
-                parrafo2.add("\n\n Equipos registrados. \n\n");
-                parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-                
-                document.add(parrafo2);
-                
-                PdfPTable tbEquipament = new PdfPTable(4);
-                tbEquipament.addCell("Id");
-                tbEquipament.addCell("Tipo");
-                tbEquipament.addCell("Marca");
-                tbEquipament.addCell("Estatus");
-
-                try {
-                    
-                    Connection cn2 = Conexion.conection();
-                    PreparedStatement pst2 = cn2.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '" + idCliente + "'");
-                    ResultSet rs2 = pst2.executeQuery();
-                
-                    if (rs2.next()) {
-                        do {                        
-                            tbEquipament.addCell(rs2.getString(1));
-                            tbEquipament.addCell(rs2.getString(2));
-                            tbEquipament.addCell(rs2.getString(3));
-                            tbEquipament.addCell(rs2.getString(4));
-                        } while (rs2.next());
-
-                        document.add(tbEquipament);
-                    }
-                } catch (SQLException e) {
-                    System.err.println("Error al cargar equipos " + e);
-                }
-                
-            } catch (Exception e) {
-                System.err.println("Error al obtener los clientes" + e);
-            }*/
-
-            document.close();
-            JOptionPane.showMessageDialog(null, "Reporte creado correctamente.");
-            
-        } catch (DocumentException | IOException e) {
-            System.err.println("Error en pdf ruta de imagen " + e);
-            JOptionPane.showMessageDialog(null, "Error al generar PDF");
-        }
+        printClientsAndEquipament();
     }//GEN-LAST:event_jButton_ImprimeReporteActionPerformed
 
     public static void main(String args[]) {
@@ -372,102 +451,5 @@ public class InformacionCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
-    
-    private void selectClient() {
-        Client client = clientDao.getClientId(idCliente);
-        setTitle("Informacion del usuario " + client.getNombre_cliente() + " - Sesion de " + user);
-        jLabel_titulo.setText("Informacion del cliente " + client.getNombre_cliente());
-
-        txt_nombre.setText(client.getNombre_cliente());
-        txt_email.setText(client.getMail_cliente());
-        txt_telefono.setText(client.getTel_cliente());
-        txt_direccion.setText(client.getDir_cliente());
-        txt_modificacion.setText(client.getUltima_modificacion());
-    }
-    
-    private void selectEquipament() {
-        try {/*
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '" + idCliente + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            tb_equipos = new JTable(model);
-            scroll_equipos.setViewportView(tb_equipos);
-            
-            model.addColumn("Id");
-            model.addColumn("Tipo de equipos");
-            model.addColumn("Marca");
-            model.addColumn("Estatus");
-            
-            while (rs.next()) {                
-                Object[] fila = new Object[4];
-                
-                for (int i = 0; i < 4; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                
-                model.addRow(fila);
-            }
-            cn.close();*/
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar, contacte al administrador");
-        }
-        
-        tb_equipos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                int fila_point = tb_equipos.rowAtPoint(e.getPoint());
-                int columna_point = 0;
-                
-                if (fila_point > -1) {
-                    idEquipo = (int)model.getValueAt(fila_point, columna_point);
-                    InformacionEquipo info = new InformacionEquipo();
-                    info.setVisible(true);
-                }
-            }
-        });
-    }
-    
-    private boolean validateClient(String nombre, String email, String telefono, String direccion) {
-         int validacion = 0;
-         
-        if (nombre.equals("")) {
-            txt_nombre.setBackground(Color.red);
-            validacion++;
-        }
-         
-        if (email.equals("")) {
-            txt_email.setBackground(Color.red);
-            validacion++;
-        }
-         
-        if (telefono.equals("")) {
-            txt_telefono.setBackground(Color.red);
-            validacion++;
-        }
-        
-        if (direccion.equals("")) {
-            txt_direccion.getText().trim();
-            validacion++;
-        }
-            
-        
-        if (validacion == 0) return true;
-        
-        return false;
-    }
-    
-    private void updateClient(String nombre, String email, String telefono, String direccion, String user ){
-        if (validateClient(nombre, email, telefono, direccion)) {
-            clientDao.updateClient(idCliente, nombre, email, telefono, direccion, user);
-            limpiar();
-        }
-    }
-    
-    private void limpiar () {
-        txt_nombre.setText("");
-        txt_email.setText("");
-        txt_telefono.setText("");
-        txt_direccion.setText("");
-    }
+   
 }
