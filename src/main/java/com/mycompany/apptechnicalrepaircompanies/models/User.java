@@ -2,49 +2,49 @@ package com.mycompany.apptechnicalrepaircompanies.models;
 
 public class User {
    
-    private Integer id_usuario;
-    private String nombre_usuario;
+    private Integer id;
+    private String name;
     private String email;
-    private String telefono;
+    private String phone;
     private String username;
     private String password;
-    private String tipo_nivel;
-    private String estatus;
-    private String registrado_por;
+    private String type;
+    private String status;
+    private String register_by;
 
     public User() {
     }
-    
-    public User(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+
+    public User(String name) {
+        this.name = name;
     }
 
-    public User(Integer id_usuario, String nombre_usuario, String email, String telefono, String username, String password, String tipo_nivel, String estatus, String registrado_por) {
-        this.id_usuario = id_usuario;
-        this.nombre_usuario = nombre_usuario;
+    public User(Integer id, String name, String email, String phone, String username, String password, String type, String status, String register_by) {
+        this.id = id;
+        this.name = name;
         this.email = email;
-        this.telefono = telefono;
+        this.phone = phone;
         this.username = username;
         this.password = password;
-        this.tipo_nivel = tipo_nivel;
-        this.estatus = estatus;
-        this.registrado_por = registrado_por;
-    }
-    
-    public Integer getId_usuario() {
-        return id_usuario;
+        this.type = type;
+        this.status = status;
+        this.register_by = register_by;
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+    public Integer getId() {
+        return id;
     }
 
-    public String getNombre_usuario() {
-        return nombre_usuario;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -55,12 +55,12 @@ public class User {
         this.email = email;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUsername() {
@@ -79,27 +79,27 @@ public class User {
         this.password = password;
     }
 
-    public String getTipo_nivel() {
-        return tipo_nivel;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo_nivel(String tipo_nivel) {
-        this.tipo_nivel = tipo_nivel;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getEstatus() {
-        return estatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEstatus(String estatus) {
-        this.estatus = estatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getRegistrado_por() {
-        return registrado_por;
+    public String getRegister_by() {
+        return register_by;
     }
 
-    public void setRegistrado_por(String registrado_por) {
-        this.registrado_por = registrado_por;
+    public void setRegister_by(String register_by) {
+        this.register_by = register_by;
     }
 }

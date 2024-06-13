@@ -202,42 +202,6 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         registerUser(nombre, email, telefono, username, pass, permisos_cmb, user);
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarUsuarios().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmb_niveles;
     private javax.swing.JButton jButton_RegistrarUsuario;
@@ -256,9 +220,9 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 
-    private boolean existeUsername(String username) {
+    private boolean existUsername(String username) {
         IUserDao userDao = new UserDao();
-        String name_user = userDao.getUserByUsername(username).getNombre_usuario();
+        String name_user = userDao.getUserByUsername(username).getName();
         if (name_user != null) {
             txt_username.setBackground(Color.red);
             JOptionPane.showMessageDialog(null, "Nombre del usuario no disponible.");
@@ -269,14 +233,14 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     
     private void registerUser (String nombre, String email, String telefono, String username, String pass, String permisos_string, String user) {
         
-        if (!existeUsername(username)) {
+        if (!existUsername(username)) {
             IUserDao userDao = new UserDao();
             userDao.registerUser(nombre, email, telefono, username, pass, permisos_string, user);
-            limpiar();
+            clean();
         }
     }
     
-    private void limpiar(){
+    private void clean(){
         txt_nombre.setText("");
         txt_email.setText("");
         txt_password.setText("");

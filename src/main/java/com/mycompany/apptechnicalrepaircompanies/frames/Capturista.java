@@ -45,7 +45,7 @@ public class Capturista extends javax.swing.JFrame {
     }
 
     public void getNameUser() {
-        name_user = userDao.getUserByUsername(user).getNombre_usuario();
+        name_user = userDao.getUserByUsername(user).getName();
         jLabel1_NombreUsuario.setText("Bienvenido " + name_user + " 👋");
     }
     
@@ -142,11 +142,11 @@ public class Capturista extends javax.swing.JFrame {
             ArrayList<Client> clients = (ArrayList<Client>) clientDao.getListClients();
 
             for (Client client : clients) {
-                tb.addCell(client.getId_cliente().toString());
-                tb.addCell(client.getNombre_cliente());
-                tb.addCell(client.getMail_cliente());
-                tb.addCell(client.getTel_cliente());
-                tb.addCell(client.getDir_cliente());
+                tb.addCell(client.getId().toString());
+                tb.addCell(client.getName());
+                tb.addCell(client.getEmail());
+                tb.addCell(client.getPhone());
+                tb.addCell(client.getAddress());
             }
             
             document.add(tb);
@@ -170,42 +170,6 @@ public class Capturista extends javax.swing.JFrame {
     private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
        printClients();
     }//GEN-LAST:event_jButton_imprimirActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Capturista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Capturista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Capturista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Capturista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Capturista().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_gestionarClientes;

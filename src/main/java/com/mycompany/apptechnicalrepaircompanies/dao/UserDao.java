@@ -25,15 +25,15 @@ public class UserDao implements IUserDao{
             if (base.rt.next()) {
 
                 user = new User(
-                        base.rt.getInt("id_usuario"),
-                        base.rt.getString("nombre_usuario"),
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
                         base.rt.getString("email"),
-                        base.rt.getString("telefono"),
+                        base.rt.getString("phone"),
                         base.rt.getString("username"),
                         base.rt.getString("password"),
-                        base.rt.getString("tipo_nivel"),
-                        base.rt.getString("estatus"),
-                        base.rt.getString("registrado_por"));
+                        base.rt.getString("type"),
+                        base.rt.getString("status"),
+                        base.rt.getString("register_by"));
                 
                 return user;
 
@@ -58,15 +58,15 @@ public class UserDao implements IUserDao{
 
             if (base.rt.next()) {
                 user = new User(
-                        base.rt.getInt("id_usuario"),
-                        base.rt.getString("nombre_usuario"),
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
                         base.rt.getString("email"),
-                        base.rt.getString("telefono"),
+                        base.rt.getString("phone"),
                         base.rt.getString("username"),
                         base.rt.getString("password"),
-                        base.rt.getString("tipo_nivel"),
-                        base.rt.getString("estatus"),
-                        base.rt.getString("registrado_por"));
+                        base.rt.getString("type"),
+                        base.rt.getString("status"),
+                        base.rt.getString("register_by"));
                 
                 return user;
             }
@@ -79,17 +79,17 @@ public class UserDao implements IUserDao{
     }
 
     @Override
-    public void registerUser(String nombre, String email, String telefono, String username, String pass, String permisos_string, String user) {
+    public void registerUser(String name, String email, String phone, String username, String pass, String type, String user) {
         try {
             base.prest = base.conec.prepareStatement(SQL_USER_REGISTER);
             
             base.prest.setInt(1, 0);
-            base.prest.setString(2, nombre);
+            base.prest.setString(2, name);
             base.prest.setString(3, email);
-            base.prest.setString(4, telefono);
+            base.prest.setString(4, phone);
             base.prest.setString(5, username);
             base.prest.setString(6, pass);
-            base.prest.setString(7, permisos_string);
+            base.prest.setString(7, type);
             base.prest.setString(8, EstatusUser.Activo.name());
             base.prest.setString(9, user);
 
@@ -110,17 +110,16 @@ public class UserDao implements IUserDao{
             base.rt = base.prest.executeQuery();
 
             while (base.rt.next()) {
-                User user = new User(
-                        base.rt.getInt("id_usuario"),
-                        base.rt.getString("nombre_usuario"),
+                user = new User(
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
                         base.rt.getString("email"),
-                        base.rt.getString("telefono"),
+                        base.rt.getString("phone"),
                         base.rt.getString("username"),
                         base.rt.getString("password"),
-                        base.rt.getString("tipo_nivel"),
-                        base.rt.getString("estatus"),
-                        base.rt.getString("registrado_por")
-                );
+                        base.rt.getString("type"),
+                        base.rt.getString("status"),
+                        base.rt.getString("register_by"));
 
                 users.add(user);
             }
@@ -144,15 +143,15 @@ public class UserDao implements IUserDao{
 
             if (base.rt.next()) {
                 user = new User(
-                        base.rt.getInt("id_usuario"),
-                        base.rt.getString("nombre_usuario"),
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
                         base.rt.getString("email"),
-                        base.rt.getString("telefono"),
+                        base.rt.getString("phone"),
                         base.rt.getString("username"),
                         base.rt.getString("password"),
-                        base.rt.getString("tipo_nivel"),
-                        base.rt.getString("estatus"),
-                        base.rt.getString("registrado_por"));
+                        base.rt.getString("type"),
+                        base.rt.getString("status"),
+                        base.rt.getString("register_by"));
 
                 return user;
             }
@@ -165,17 +164,17 @@ public class UserDao implements IUserDao{
     }
 
     @Override
-    public void updateUser(int idUser, String nombre, String email, String telefono, String username, String permisos_string, String estatus_string) {
+    public void updateUser(int idUser, String nombre, String email, String phone, String username, String type, String status) {
         try {
             
             base.prest = base.conec.prepareStatement(SQL_USER_UPDATE);
 
             base.prest.setString(1, nombre);
             base.prest.setString(2, email);
-            base.prest.setString(3, telefono);
+            base.prest.setString(3, phone);
             base.prest.setString(4, username);
-            base.prest.setString(5, permisos_string);
-            base.prest.setString(6, estatus_string);
+            base.prest.setString(5, type);
+            base.prest.setString(6, status);
             base.prest.setInt(7, idUser);
 
             base.prest.executeUpdate();

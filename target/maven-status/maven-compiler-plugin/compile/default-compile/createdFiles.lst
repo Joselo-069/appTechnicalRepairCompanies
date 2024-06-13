@@ -9,7 +9,6 @@ com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$1.class
 com\mycompany\apptechnicalrepaircompanies\dao\IEquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\AppTechnicalRepairCompanies.class
-com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$6.class
 com\mycompany\apptechnicalrepaircompanies\models\User.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin.class
@@ -47,9 +46,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\GraficaEstatus.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$2.class
 com\mycompany\apptechnicalrepaircompanies\dao\UserDao.class
-com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$4.class
-com\mycompany\apptechnicalrepaircompanies\frames\GestionarClientes$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$5.class
@@ -58,7 +55,6 @@ com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo$5.class
-com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$8.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo.class
@@ -86,7 +82,6 @@ com\mycompany\apptechnicalrepaircompanies\models\Client.class
 com\mycompany\apptechnicalrepaircompanies\frames\Tecnico$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarClientes.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$1.class
-com\mycompany\apptechnicalrepaircompanies\frames\GestionarUsuarios$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\Tecnico.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo$3.class

@@ -18,7 +18,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        setSize(400,550);
+        setSize(400,600);
         setResizable(false);
         setTitle("Acceso al sistema");
         setLocationRelativeTo(null);
@@ -103,23 +103,22 @@ public class Login extends javax.swing.JFrame {
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
 
-        String tipo_nivel = "";
-        String estatus = "";
+        String type = "", status = "";
 
         if (!user.equals("") || !pass.equals("")) {
 
             User userImpl = userDao.getUserByUsernamePassword(user, pass);
 
-            tipo_nivel = userImpl.getTipo_nivel();
-            estatus = userImpl.getEstatus();
+            type = userImpl.getType();
+            status = userImpl.getStatus();
 
-            if (tipo_nivel.equalsIgnoreCase(RolUser.Administrador.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
+            if (type.equalsIgnoreCase(RolUser.Administrador.name()) && status.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Admin().setVisible(true);
-            } else if (tipo_nivel.equalsIgnoreCase(RolUser.Capturista.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
+            } else if (type.equalsIgnoreCase(RolUser.Capturista.name()) && status.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Capturista().setVisible(true);
-            } else if (tipo_nivel.equalsIgnoreCase(RolUser.Tecnico.name()) && estatus.equalsIgnoreCase(EstatusUser.Activo.name())) {
+            } else if (type.equalsIgnoreCase(RolUser.Tecnico.name()) && status.equalsIgnoreCase(EstatusUser.Activo.name())) {
                 dispose();
                 new Tecnico().setVisible(true);
             }

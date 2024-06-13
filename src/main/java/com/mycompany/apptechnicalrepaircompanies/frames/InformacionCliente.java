@@ -204,14 +204,14 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     private void listClient() {
         Client client = clientDao.getClientId(idCliente);
-        setTitle("Informacion del usuario " + client.getNombre_cliente() + " - Sesion de " + user);
-        jLabel_titulo.setText("Informacion del cliente " + client.getNombre_cliente());
+        setTitle("Informacion del usuario " + client.getName()+ " - Sesion de " + user);
+        jLabel_titulo.setText("Informacion del cliente " + client.getName());
 
-        txt_nombre.setText(client.getNombre_cliente());
-        txt_email.setText(client.getMail_cliente());
-        txt_telefono.setText(client.getTel_cliente());
-        txt_direccion.setText(client.getDir_cliente());
-        txt_modificacion.setText(client.getUltima_modificacion());
+        txt_nombre.setText(client.getName());
+        txt_email.setText(client.getEmail());
+        txt_telefono.setText(client.getPhone());
+        txt_direccion.setText(client.getAddress());
+        txt_modificacion.setText(client.getLast_update());
     }
     
     private void listEquipament() {
@@ -283,11 +283,11 @@ public class InformacionCliente extends javax.swing.JFrame {
     private void updateClient(String nombre, String email, String telefono, String direccion, String user ){
         if (validateClient(nombre, email, telefono, direccion)) {
             clientDao.updateClient(idCliente, nombre, email, telefono, direccion, user);
-            limpiar();
+            clean();
         }
     }
     
-    private void limpiar () {
+    private void clean () {
         txt_nombre.setText("");
         txt_email.setText("");
         txt_telefono.setText("");
@@ -322,11 +322,11 @@ public class InformacionCliente extends javax.swing.JFrame {
 
             Client cli = clientDao.getClientId(idCliente);
 
-            tbClient.addCell(cli.getId_cliente().toString());
-            tbClient.addCell(cli.getNombre_cliente());
-            tbClient.addCell(cli.getMail_cliente());
-            tbClient.addCell(cli.getTel_cliente());
-            tbClient.addCell(cli.getDir_cliente());
+            tbClient.addCell(cli.getId().toString());
+            tbClient.addCell(cli.getName());
+            tbClient.addCell(cli.getEmail());
+            tbClient.addCell(cli.getPhone());
+            tbClient.addCell(cli.getAddress());
 
             document.add(tbClient);
 
@@ -399,39 +399,6 @@ public class InformacionCliente extends javax.swing.JFrame {
     private void jButton_ImprimeReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimeReporteActionPerformed
         printClientsAndEquipament();
     }//GEN-LAST:event_jButton_ImprimeReporteActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InformacionCliente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_ImprimeReporte;

@@ -41,21 +41,21 @@ public class InformacionUsuario extends javax.swing.JFrame {
 
         User user = userDao.getUserByUsername(user_update);
 
-        ID = user.getId_usuario();
+        ID = user.getId();
 
-        txt_nombre.setText(user.getNombre_usuario());
+        txt_nombre.setText(user.getName());
         txt_email.setText(user.getEmail());
-        txt_telefono.setText(user.getTelefono());
+        txt_telefono.setText(user.getPhone());
         txt_username.setText(user.getUsername());
-        txt_RegistradoPor.setText(user.getRegistrado_por());
+        txt_RegistradoPor.setText(user.getRegister_by());
 
-        cmb_niveles.setSelectedItem(user.getTipo_nivel());
-        cmbEstatus.setSelectedItem(user.getEstatus());
+        cmb_niveles.setSelectedItem(user.getType());
+        cmbEstatus.setSelectedItem(user.getStatus());
     }
 
     private boolean existeUsername(String username, int idName) {
 
-        String name_user = userDao.getUserByUsernameUpdate(username, idName).getNombre_usuario();
+        String name_user = userDao.getUserByUsernameUpdate(username, idName).getName();
 
         if (name_user != null) {
             txt_username.setBackground(Color.red);
@@ -257,39 +257,6 @@ public class InformacionUsuario extends javax.swing.JFrame {
         RestaurarPassword res = new RestaurarPassword();
         res.setVisible(true);
     }//GEN-LAST:event_jButton_restaurarActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InformacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InformacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InformacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InformacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InformacionUsuario().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbEstatus;
