@@ -1,20 +1,20 @@
 package com.mycompany.apptechnicalrepaircompanies.models;
 
-public class TypeEquipment {
+public class Brand {
     
     private Integer id;
     private String name;
     private String status;
-
-    public TypeEquipment() {
+   
+    public Brand() {
     }
-    
-    public TypeEquipment(Integer id, String name, String status) {
+
+    public Brand(Integer id, String name, String status) {
         this.id = id;
         this.name = name;
         this.status = status;
     }
-   
+
     public Integer getId() {
         return id;
     }
@@ -37,5 +37,6 @@ public class TypeEquipment {
 
     public void setStatus(String status) {
         this.status = status;
-    }    
+    }
+
 }
