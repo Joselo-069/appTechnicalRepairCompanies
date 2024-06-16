@@ -47,12 +47,13 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     } 
     
     public void registerEquipament(String tipoEquipo, String marca, String modelo, String numSerie, String diaIngreso, String mesIngreso, String annioIngreso, String observaciones, String estatus, String user){
-      
+      /*
         if (validateEquipament(modelo, numSerie, observaciones)) {
            equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
+        */
     }
     
     public boolean validateEquipament (String modelo, String num_serie, String observaciones){

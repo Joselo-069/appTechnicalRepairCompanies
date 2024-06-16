@@ -9,8 +9,8 @@ public class ReviewDao implements IReviewDao {
 
     Equipament equipament = new Equipament();
     Conexion base = Conexion.getInstance();
-    /*
-    @Override
+
+    /*@Override
     public List<Equipament> getEquimanentId(int idClient) {
         
         List<Equipament> equipaments = new ArrayList<>();
@@ -213,47 +213,48 @@ public class ReviewDao implements IReviewDao {
 
     @Override
     public void registerReview(int idCliente, String tipo_equipo, String marca, String modelo, String num_serie, String dia_ingreso, String mes_ingreso, String annio_ingreso, String observaciones, String estatus, String user) {
+
+    }
+
+    @Override
+    public List<Review> getListReviews() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Review> getListEquipaments() {
+    public Review getDetailReview(int idEquipament) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Review getDetailEquipament(int idEquipament) {
+    public List<Review> getListReviewsSearch(String estatus) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Review> getListEquipamentsSearch(String estatus) {
+    public List<Review> getReviewClientId(int idClient) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Review> getEquimanentId(int idClient) {
+    public void updateReview(int idEquipo, String tipo_equipo, String marca, String modelo, String num_serie, String observaciones, String estatus, String user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void updateEquipament(int idEquipo, String tipo_equipo, String marca, String modelo, String num_serie, String observaciones, String estatus, String user) {
+    public void updateReviewTechnical(int idEquipo, String estatus, String comentarios_tecnicos, String revision_tecnica_de) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void updateEquipamentTecnico(int idEquipo, String estatus, String comentarios_tecnicos, String revision_tecnica_de) {
+    public void reportStatus() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void drawEstatus() {
+    public void reportBrands() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void drawMarcas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

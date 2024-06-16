@@ -52,6 +52,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
     } 
     
     public void getDetailEquipament() {
+        /*
         Equipament equipament = equipamentDao.getDetailEquipament(idEquipament);
 
         cmb_tipo.setSelectedItem(equipament.getTipo_equipo());
@@ -71,6 +72,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         txtp_comentarios.setText(equipament.getComentarios_tecnicos());
 
         jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + equipament.getRevision_tecnica_de());
+*/
     }
     
     public boolean validateEquipament(String modelo, String num_serie, String observaciones) {
@@ -97,7 +99,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }
     
     public void updateEquipament(int idEquipo, String tipo_equipo, String marca, String modelo, String num_serie, String observaciones, String estatus, String user) {
-        
+        /*
         if(validateEquipament(modelo, num_serie, observaciones)){
             equipamentDao.updateEquipament(idEquipo, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);        
             clean();
@@ -105,7 +107,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
-        
+        */
     }
     
     private void clean(){

@@ -62,7 +62,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         txt_nombre.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         txt_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -71,12 +71,12 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 txt_nombreActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
+        getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 210, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Email:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         txt_email.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -85,12 +85,12 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 txt_emailActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, -1));
+        getContentPane().add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 210, -1));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Telefono:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         txt_telefono.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         txt_telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -99,12 +99,12 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 txt_telefonoActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 210, -1));
+        getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 210, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Permisos de:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         txt_username.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         txt_username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -113,26 +113,26 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 txt_usernameActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
+        getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 210, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Username:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Password:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, -1, -1));
 
         txt_password.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         txt_password.setForeground(new java.awt.Color(0, 0, 0));
         txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_password.setToolTipText("");
-        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 210, -1));
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 210, -1));
 
         cmb_niveles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
-        getContentPane().add(cmb_niveles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        getContentPane().add(cmb_niveles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         jButton_RegistrarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
         jButton_RegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +140,9 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
                 jButton_RegistrarUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_RegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 120, 100));
+        getContentPane().add(jButton_RegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 120, 100));
+
+        jLabel_Wallpaper.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 350));
 
         pack();
@@ -200,6 +202,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
             validacion++;
         }
         registerUser(nombre, email, telefono, username, pass, permisos_cmb, user);
+        this.dispose();
     }//GEN-LAST:event_jButton_RegistrarUsuarioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

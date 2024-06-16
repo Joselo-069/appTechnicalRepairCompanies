@@ -3,6 +3,7 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -21,16 +22,9 @@ public class GestionarClientes extends javax.swing.JFrame {
     
     public GestionarClientes() {
         initComponents();
-        
         user = Login.user;
-        
-        setSize(630, 330);
-        setTitle("Capturista - Sesion de " + user);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
+        Design.viewSizeFrame(this, user, 630, 330, "Capturista - Sesion de " + user);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        
         listClients();
     }
     

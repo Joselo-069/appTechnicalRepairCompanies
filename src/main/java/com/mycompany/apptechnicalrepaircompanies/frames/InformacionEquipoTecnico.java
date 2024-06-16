@@ -36,6 +36,7 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
     }
     
     public void getDetailEquipament() {
+        /*
         Equipament equipament = equipamentDao.getDetailEquipament(idEquipament);
 
         cmb_tipo.setSelectedItem(equipament.getTipo_equipo());
@@ -55,11 +56,14 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         txtp_comentarios.setText(equipament.getComentarios_tecnicos());
 
         jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + equipament.getRevision_tecnica_de());
+        */
     }
   
     public void updatEquipamentTecnico(int idEquipament, String estatus, String comentarios, String tecnico){
+        /*
         equipamentDao.updateEquipamentTecnico(idEquipament, estatus, comentarios, tecnico);
         this.dispose();
+*/
     }
     
     @Override

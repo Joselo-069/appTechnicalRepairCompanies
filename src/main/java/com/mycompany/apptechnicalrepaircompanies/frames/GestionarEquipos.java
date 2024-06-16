@@ -42,6 +42,7 @@ public class GestionarEquipos extends javax.swing.JFrame {
     }
 
     public void listEquipament() {
+        /*
         ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipaments();
 
         tbEquipos = new JTable(model);
@@ -62,9 +63,11 @@ public class GestionarEquipos extends javax.swing.JFrame {
         }
         
         ObtenerDatosTabla();
+*/
     }
     
     public void listEquipamentSearch(String status) {
+       /*
         ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipamentsSearch(status);
 
         tbEquipos = new JTable(model);
@@ -83,6 +86,7 @@ public class GestionarEquipos extends javax.swing.JFrame {
             file[3] = equipament.getEstatus();
             model.addRow(file);
         }
+*/
     }
 
     public void ObtenerDatosTabla() {

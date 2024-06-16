@@ -9,11 +9,12 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
-import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
-import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
-import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
+import com.mycompany.apptechnicalrepaircompanies.models.Review;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.Image;
@@ -31,7 +32,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     IClientDao clientDao = new ClientDao();
-    IEquipamentDao equipamentDao = new EquipamentDao();
+    IReviewDao reviewDao = new ReviewDao();
     
     int idCliente;
     public static int idEquipo = 0;
@@ -42,11 +43,6 @@ public class InformacionCliente extends javax.swing.JFrame {
         initComponents();
         user = Login.user;
         idCliente = GestionarClientes.IdCliente;
-                
-        setSize(650,450);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         txt_modificacion.disable();
         listClient();
@@ -180,7 +176,7 @@ public class InformacionCliente extends javax.swing.JFrame {
                 jButton_actualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 210, 35));
+        getContentPane().add(jButton_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 210, 35));
 
         jButton_equipo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton_equipo.setText("Registrar equipo");
@@ -189,7 +185,7 @@ public class InformacionCliente extends javax.swing.JFrame {
                 jButton_equipoActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_equipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 210, 35));
+        getContentPane().add(jButton_equipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 210, 35));
 
         jButton_ImprimeReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/impresora.png"))); // NOI18N
         jButton_ImprimeReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -197,14 +193,14 @@ public class InformacionCliente extends javax.swing.JFrame {
                 jButton_ImprimeReporteActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_ImprimeReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 120, 100));
+        getContentPane().add(jButton_ImprimeReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 120, 100));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void listClient() {
         Client client = clientDao.getClientId(idCliente);
-        setTitle("Informacion del usuario " + client.getName()+ " - Sesion de " + user);
+        Design.viewSizeFrame(this, user, 650, 450, "Informacion del usuario " + client.getName()+ " - Sesion de " + user);
         jLabel_titulo.setText("Informacion del cliente " + client.getName());
 
         txt_nombre.setText(client.getName());
@@ -215,7 +211,8 @@ public class InformacionCliente extends javax.swing.JFrame {
     }
     
     private void listEquipament() {
-        ArrayList<Equipament> equimanets = (ArrayList<Equipament>) equipamentDao.getEquimanentId(idCliente);
+        
+        ArrayList<Review> reviews = (ArrayList<Review>) reviewDao.getReviewClientId(idCliente);
         tb_equipos = new JTable(model);
         scroll_equipos.setViewportView(tb_equipos);
 
@@ -223,16 +220,17 @@ public class InformacionCliente extends javax.swing.JFrame {
         model.addColumn("Tipo de equipos");
         model.addColumn("Marca");
         model.addColumn("Estatus");
-        
-        for (Equipament equipament : equimanets) {
+
+        for (Review review : reviews) {
             Object[] file = new Object[4];
-            file[0] = equipament.getId_equipo();
-            file[1] = equipament.getTipo_equipo();
-            file[2] = equipament.getMarca();
-            file[3] = equipament.getEstatus();
+            file[0] = review.getId();
+            file[1] = review.getType();
+            file[2] = review.getBrand();
+            file[3] = review.getStatus();
             model.addRow(file);
         }
         selectEquipament();
+
     }
     
     private void selectEquipament() {
@@ -251,10 +249,10 @@ public class InformacionCliente extends javax.swing.JFrame {
         });
     }
     
-    private boolean validateClient(String nombre, String email, String telefono, String direccion) {
+    private boolean validateClient(String name, String email, String phone, String address) {
          int validacion = 0;
          
-        if (nombre.equals("")) {
+        if (name.equals("")) {
             txt_nombre.setBackground(Color.red);
             validacion++;
         }
@@ -264,13 +262,13 @@ public class InformacionCliente extends javax.swing.JFrame {
             validacion++;
         }
          
-        if (telefono.equals("")) {
+        if (phone.equals("")) {
             txt_telefono.setBackground(Color.red);
             validacion++;
         }
         
-        if (direccion.equals("")) {
-            txt_direccion.getText().trim();
+        if (address.equals("")) {
+            txt_direccion.setBackground(Color.red);
             validacion++;
         }
             
@@ -280,10 +278,12 @@ public class InformacionCliente extends javax.swing.JFrame {
         return false;
     }
     
-    private void updateClient(String nombre, String email, String telefono, String direccion, String user ){
-        if (validateClient(nombre, email, telefono, direccion)) {
-            clientDao.updateClient(idCliente, nombre, email, telefono, direccion, user);
+    private void updateClient(String name, String email, String phone, String address, String user ){
+        if (validateClient(name, email, phone, address)) {
+            clientDao.updateClient(idCliente, name, email, phone, address, user);
             clean();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
     }
     
@@ -343,13 +343,13 @@ public class InformacionCliente extends javax.swing.JFrame {
             tbEquipament.addCell("Marca");
             tbEquipament.addCell("Estatus");
 
-            ArrayList<Equipament> equimanets = (ArrayList<Equipament>) equipamentDao.getEquimanentId(idCliente);
+            ArrayList<Review> equimanets = (ArrayList<Review>) reviewDao.getReviewClientId(idCliente);
 
-            for (Equipament eq : equimanets) {
-                tbEquipament.addCell(eq.getId_equipo().toString());
-                tbEquipament.addCell(eq.getTipo_equipo());
-                tbEquipament.addCell(eq.getMarca());
-                tbEquipament.addCell(eq.getEstatus());
+            for (Review eq : equimanets) {
+                tbEquipament.addCell(eq.getId().toString());
+                tbEquipament.addCell(eq.getType());
+                tbEquipament.addCell(eq.getBrand());
+                tbEquipament.addCell(eq.getStatus());
             }
 
             document.add(tbEquipament);
@@ -360,6 +360,7 @@ public class InformacionCliente extends javax.swing.JFrame {
             System.err.println("Error en pdf ruta de imagen " + e);
             JOptionPane.showMessageDialog(null, "Error al generar PDF");
         }
+        
     }
     
     private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
@@ -389,6 +390,7 @@ public class InformacionCliente extends javax.swing.JFrame {
         direccion = txt_direccion.getText().trim();
         
         updateClient(nombre, email, telefono, direccion, user);
+        this.dispose();
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     private void jButton_equipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_equipoActionPerformed

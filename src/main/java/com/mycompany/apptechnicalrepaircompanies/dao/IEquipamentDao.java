@@ -4,7 +4,6 @@ import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import java.util.List;
 
 public interface IEquipamentDao {
-
     
     /******** ATRIBUTOS ******/
     final String SQL_LIST_EQUIPAMENT = "SELECT e.id, model, t.name AS type, b.name AS brand FROM equipments e INNER JOIN brands b ON e.brand_id=b.id INNER JOIN type_equipaments t ON t.id = e.type_id"; 

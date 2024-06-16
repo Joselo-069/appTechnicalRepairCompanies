@@ -2,9 +2,11 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class RegistrarClientes extends javax.swing.JFrame {
@@ -15,12 +17,7 @@ public class RegistrarClientes extends javax.swing.JFrame {
     public RegistrarClientes() {
         initComponents();
         user = Login.user;
-        
-        setTitle("Registrar nuevo cliente - Sesion de " + user);
-        setSize(530, 350);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
+        Design.viewSizeFrame(this, user, 530, 350, "Registrar nuevo cliente - Sesion de " + user);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
@@ -30,7 +27,7 @@ public class RegistrarClientes extends javax.swing.JFrame {
         return retValue;
     }
 
-    private boolean validateClient(String email, String nombre, String telefono, String direccion) {
+    private boolean validateClient(String email, String name, String phone, String address) {
         int validacion = 0;
 
         if (email.equals("")) {
@@ -38,34 +35,34 @@ public class RegistrarClientes extends javax.swing.JFrame {
             validacion++;
         }
 
-        if (nombre.equals("")) {
+        if (name.equals("")) {
             txt_nombre.setBackground(Color.red);
             validacion++;
         }
 
-        if (telefono.equals("")) {
+        if (phone.equals("")) {
             txt_telefono.setBackground(Color.red);
             validacion++;
         }
 
-        if (direccion.equals("")) {
+        if (address.equals("")) {
             txt_direccion.setBackground(Color.red);
             validacion++;
         }
 
-        if (validacion == 0) {
-            return true;
-        }
+        if (validacion == 0) return true;
 
         return false;
     }
 
-    private void registerClient(String nombre, String email, String telefono, String direccion) {
+    private void registerClient(String name, String email, String phone, String address) {
 
-        if (validateClient(email, nombre, telefono, direccion)) {
-            clientDao.registerClient(nombre, email, telefono, direccion, user);
+        if (validateClient(email, name, phone, address)) {
+            clientDao.registerClient(name, email, phone, address, user);
             clean();
             this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
 
     }
