@@ -6,6 +6,7 @@ import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.emuns.EstatusEquipamet;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -25,11 +26,8 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         user = Login.user;
         idCliente = GestionarClientes.IdCliente;
         nom_cliente = getClient();
-        
-        setSize(630,480);
-        setResizable(false);
-        setTitle("Registrar nuevo equipo para " + nom_cliente);
-        setLocationRelativeTo(null);
+                
+        Design.viewSizeFrame(this, user, 630, 480, "Registrar nuevo equipo para " + nom_cliente);
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         txt_nombreCliente.setText(nom_cliente);
@@ -47,13 +45,11 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     } 
     
     public void registerEquipament(String tipoEquipo, String marca, String modelo, String numSerie, String diaIngreso, String mesIngreso, String annioIngreso, String observaciones, String estatus, String user){
-      /*
         if (validateEquipament(modelo, numSerie, observaciones)) {
            equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
-        */
     }
     
     public boolean validateEquipament (String modelo, String num_serie, String observaciones){

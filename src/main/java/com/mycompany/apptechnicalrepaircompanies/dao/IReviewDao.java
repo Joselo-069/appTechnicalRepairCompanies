@@ -11,7 +11,13 @@ public interface IReviewDao {
     final String SQL_REVIEW_ID = "SELECT * FROM reviews WHERE id = ?";
     //final String SQL_LIST_REVIEW_SEARCH = "SELECT id, type, brand, status FROM reviews WHERE status LIKE ?";
     final String SQL_LIST_REVIEW_SEARCH = "SELECT r.id, t.name, b.name, r.status FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id WHERE status LIKE ?";
-    final String SQL_REVIEW_CLIENT_ID = "SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = ?";
+    //final String SQL_REVIEW_CLIENT_ID = "SELECT id_equipo AS id, tipo_equipo AS type, marca AS brand, estatus FROM equipos WHERE id_cliente = ?";
+    final String SQL_REVIEW_CLIENT_ID = "SELECT r.id AS id, e.model AS model, t.name AS TYPE, b.name AS brand, r.status AS STATUS\n" +
+                                        "FROM reviews r\n" +
+                                        "INNER JOIN equipments e ON e.id = r.equipament_id\n" +
+                                        "INNER JOIN type_equipaments t ON e.type_id = t.id\n" +
+                                        "INNER JOIN brands b ON e.brand_id = b.id\n" +
+                                        "WHERE client_id = ?";
     
     //final String SQL_UPDATE_REVIEW = "UPDATE reviews set tipo_equipo=?, marca=?, modelo=?, num_serie=?, observaciones=?, estatus=?, ultima_modificacion=? WHERE id_equipo = ?";
     final String SQL_UPDATE_REVIEW = "UPDATE reviews set equipament_id=?, image=?, serial_number=?, observations=?, status=?, last_update=? WHERE id = ?";

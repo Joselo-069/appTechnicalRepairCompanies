@@ -217,16 +217,18 @@ public class InformacionCliente extends javax.swing.JFrame {
         scroll_equipos.setViewportView(tb_equipos);
 
         model.addColumn("Id");
-        model.addColumn("Tipo de equipos");
+        model.addColumn("Modelo");
         model.addColumn("Marca");
+        model.addColumn("Tipo de equipos");
         model.addColumn("Estatus");
 
         for (Review review : reviews) {
-            Object[] file = new Object[4];
+            Object[] file = new Object[5];
             file[0] = review.getId();
             file[1] = review.getType();
-            file[2] = review.getBrand();
-            file[3] = review.getStatus();
+            file[2] = review.getModel();            
+            file[3] = review.getBrand();
+            file[4] = review.getStatus();
             model.addRow(file);
         }
         selectEquipament();

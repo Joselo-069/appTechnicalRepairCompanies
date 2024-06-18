@@ -3,13 +3,18 @@ package com.mycompany.apptechnicalrepaircompanies.dao;
 import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDao implements IReviewDao {
 
     Equipament equipament = new Equipament();
     Conexion base = Conexion.getInstance();
-
+    List<Equipament> equipaments = new ArrayList<>();
+    
+    Review review = new Review();
+    List<Review> reviews = new ArrayList<>();
+    
     /*@Override
     public List<Equipament> getEquimanentId(int idClient) {
         
@@ -233,7 +238,31 @@ public class ReviewDao implements IReviewDao {
 
     @Override
     public List<Review> getReviewClientId(int idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_REVIEW_CLIENT_ID);
+            base.prest.setInt(1, idClient);
+
+            base.rt = base.prest.executeQuery();
+
+            while (base.rt.next()) {
+                review = new Review(
+                        base.rt.getInt("id"),
+                        base.rt.getString("model"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"),
+                        base.rt.getString("status"));
+                      
+                reviews.add(review);
+            }
+
+            return reviews;
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return reviews;
     }
 
     @Override

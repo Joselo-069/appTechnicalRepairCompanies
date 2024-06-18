@@ -24,6 +24,7 @@ com\mycompany\apptechnicalrepaircompanies\utils\Design.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo.class
 com\mycompany\apptechnicalrepaircompanies\models\TypeEquipment.class
 com\mycompany\apptechnicalrepaircompanies\models\Review.class
+com\mycompany\apptechnicalrepaircompanies\dao\IDeliverEquipament.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos$2.class
 com\mycompany\apptechnicalrepaircompanies\dao\TypeEquipamentDao.class

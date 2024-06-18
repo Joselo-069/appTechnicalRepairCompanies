@@ -36,6 +36,14 @@ public class Review {
         this.technical_review = technical_review;
     }
 
+    public Review(Integer id, String type, String brand, String model, String status) {
+        this.id = id;
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.status = status;
+    }
+    
     public Integer getId() {
         return id;
     }

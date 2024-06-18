@@ -11,7 +11,7 @@ public interface IEquipamentDao {
     final String SQL_UPDATE_EQUIPAMENT = "UPDATE equipments SET model=?, type_id=?, brand_id=? WHERE id = ?";
     final String SQL_DETAIL_EQUIPAMENT = "SELECT e.id, model, t.name AS type, b.name AS brand FROM equipments e INNER JOIN brands b ON e.brand_id=b.id INNER JOIN type_equipaments t ON t.id = e.type_id WHERE e.id = ?";
     final String SQL_DELTE_EQUIPAMENT = "UPDATE equipments SET status=0 WHERE id = ?";
-    
+   
     /******** METODOS ******/
     List<Equipament> getListEquipament();
     Equipament getEquipamentId(int id);
