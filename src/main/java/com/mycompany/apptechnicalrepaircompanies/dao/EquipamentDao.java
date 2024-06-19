@@ -115,4 +115,30 @@ public class EquipamentDao implements IEquipamentDao {
         }    
     }
 
+    @Override
+    public Equipament getEquipamentBrandType(String brand, String type) {
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_DETAIL_EQUIPAMENT_BRAND_AND_TYPE);
+            base.prest.setString(1, brand);
+            base.prest.setString(2, type);
+
+            base.rt = base.prest.executeQuery();
+
+            if (base.rt.next()) {
+                equipament = new Equipament(
+                        base.rt.getInt("id"),
+                        base.rt.getString("model"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"));
+                return equipament;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return equipament;
+    }
+
 }

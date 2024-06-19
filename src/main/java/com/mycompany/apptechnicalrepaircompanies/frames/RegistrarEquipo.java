@@ -1,16 +1,27 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
+import com.mycompany.apptechnicalrepaircompanies.dao.BrandDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IBrandDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ITypeEquipament;
+import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.TypeEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.emuns.EstatusEquipamet;
+import com.mycompany.apptechnicalrepaircompanies.models.Brand;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
+import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
+import com.mycompany.apptechnicalrepaircompanies.models.TypeEquipment;
 import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Calendar;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -20,6 +31,9 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     String user = "", nom_cliente = "";
     IEquipamentDao equipamentDao = new EquipamentDao();
     IClientDao clientDao = new ClientDao();
+    IReviewDao reviewDao = new ReviewDao();
+    IBrandDao brandDao = new BrandDao();
+    ITypeEquipament typeDao = new TypeEquipamentDao();
 
     public RegistrarEquipo() {
         initComponents();
@@ -31,6 +45,8 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         txt_nombreCliente.setText(nom_cliente);
+        setTypeEquipamentCombox();
+        setBrandsComBox();
     }
 
     @Override
@@ -44,22 +60,53 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         return cli.getName();
     } 
     
-    public void registerEquipament(String tipoEquipo, String marca, String modelo, String numSerie, String diaIngreso, String mesIngreso, String annioIngreso, String observaciones, String estatus, String user){
-        if (validateEquipament(modelo, numSerie, observaciones)) {
-           equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
+    public void setTypeEquipamentCombox(){
+        List<TypeEquipment> listTypeEquipament = typeDao.getListTypes();
+        DefaultComboBoxModel<String> modelComboBox = new DefaultComboBoxModel<>();
+        
+        for (TypeEquipment type : listTypeEquipament) {
+            String textTypeEquipament = type.getName();
+            modelComboBox.addElement(textTypeEquipament);
+        }
+        
+        cmb_tipo.setModel(modelComboBox);
+    }
+    
+    public void setBrandsComBox() {
+        List<Brand> listBrands = brandDao.getListBrands();
+        DefaultComboBoxModel<String> modelComboBox = new DefaultComboBoxModel<>();
+
+        for (Brand brand : listBrands) {
+            String textBrand = brand.getName();
+            modelComboBox.addElement(textBrand);
+        }
+
+        cmb_marca.setModel(modelComboBox);
+    }
+    
+    public int getIdEquipament(String brand, String type){
+        Equipament equipament = equipamentDao.getEquipamentBrandType(brand, type);
+        return equipament.getId();
+    }
+    
+    public void registerEquipament(int idEquipament, String image, String numSerie, String day, String month, String year, String observations, String estatus){
+        
+        if (validateEquipament(idEquipament, numSerie, observations)) {
+           reviewDao.registerReview(idCliente, idEquipament, image, numSerie, day, month, year, observations, estatus, user);
+            //}equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
     }
     
-    public boolean validateEquipament (String modelo, String num_serie, String observaciones){
+    public boolean validateEquipament (int Idequipament, String num_serie, String observaciones){
         int validacion = 0;
-
+/*
         if (modelo.equals("")) {
             txt_modelo.setBackground(Color.red);
             validacion++;
         }
-
+*/
         if (num_serie.equals("")) {
             txt_serie.setBackground(Color.red);
             validacion++;
@@ -210,8 +257,13 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         dia_ingreso = Integer.toString(calendar.get(Calendar.DATE));
         mes_ingreso = Integer.toString(calendar.get(Calendar.MONTH));
         annio_ingreso = Integer.toString(calendar.get(Calendar.YEAR));
-
-        registerEquipament(tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus, user);        
+        
+        String image = "image.ong";
+        
+        int idEquipament = getIdEquipament(marca, tipo_equipo);
+        
+        registerEquipament(idEquipament, image, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus);
+        //registerEquipament(tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus, user);        
     }//GEN-LAST:event_jButton_equipoActionPerformed
 
 

@@ -1,7 +1,6 @@
 package com.mycompany.apptechnicalrepaircompanies.dao;
 
 import com.mycompany.apptechnicalrepaircompanies.models.Brand;
-import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import java.util.List;
 
 public interface IBrandDao {

@@ -27,7 +27,7 @@ public interface IReviewDao {
     final String SQL_GROUP_BY_MARCA = "SELECT b.name, COUNT(b.name) as CountBrand FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id GROUP BY b.name";
             
     /*** ****** METODOS ******/
-    void registerReview(int idCliente, String tipo_equipo, String marca, String modelo, String num_serie, String dia_ingreso, String mes_ingreso, String annio_ingreso, String observaciones, String estatus, String user);
+    void registerReview(int idClient, int idEquipament, String image, String numSerie, String day, String month, String year, String observations, String status, String last_update);
     List<Review> getListReviews();
     Review getDetailReview(int idEquipament);
     List<Review> getListReviewsSearch(String status);

@@ -3,8 +3,10 @@ package com.mycompany.apptechnicalrepaircompanies.dao;
 import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ReviewDao implements IReviewDao {
 
@@ -217,8 +219,30 @@ public class ReviewDao implements IReviewDao {
     */
 
     @Override
-    public void registerReview(int idCliente, String tipo_equipo, String marca, String modelo, String num_serie, String dia_ingreso, String mes_ingreso, String annio_ingreso, String observaciones, String estatus, String user) {
+    public void registerReview(int idClient, int idEquipament, String image, String numSerie, String day, String month, String year, String observations, String status, String last_update) {
+        try {
+            base.prest = base.conec.prepareStatement(SQL_REGISTER_REVIEW);
 
+            base.prest.setInt(1, idClient);
+            base.prest.setInt(2, idEquipament);
+            base.prest.setString(3, image);
+            base.prest.setString(4, numSerie);
+            base.prest.setString(5, day);
+            base.prest.setString(6, month);
+            base.prest.setString(7, year);
+            base.prest.setString(8, observations);
+            base.prest.setString(9, status);
+            base.prest.setString(10, last_update);
+            base.prest.setString(11, ""); // Comentarios técnicos vacíos
+            base.prest.setString(12, "");
+            
+            base.prest.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Equipo Registrado Exitosamente");
+        } catch (SQLException e) {
+            System.err.println("Error al registrar usuario" + e);
+            JOptionPane.showMessageDialog(null, "Error al registrar usuario");
+        }
     }
 
     @Override
