@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IReviewDao {
     /*** ****** ATRIBUTOS ******/
-    final String SQL_REGISTER_REVIEW = "INSERT INTO reviews VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    final String SQL_REGISTER_REVIEW = "INSERT INTO reviews (client_id, equipament_id, image, serial_number, day, month, year, observations, status, last_update, technical_comments, technical_review_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
     //final String SQL_LIST_REVIEW = "SELECT id, type, brand, status FROM reviews";
     final String SQL_LIST_REVIEW = "SELECT r.id, t.name, b.name, r.status FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id";
     final String SQL_REVIEW_ID = "SELECT * FROM reviews WHERE id = ?";

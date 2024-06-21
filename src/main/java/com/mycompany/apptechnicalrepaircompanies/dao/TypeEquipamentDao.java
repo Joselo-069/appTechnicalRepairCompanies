@@ -115,4 +115,28 @@ public class TypeEquipamentDao implements ITypeEquipament{
         }
     }
 
+    @Override
+    public TypeEquipment getTypeName(String name) {
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_TYPE_NAME);
+            base.prest.setString(1, name);
+
+            base.rt = base.prest.executeQuery();
+
+            if (base.rt.next()) {
+                type = new TypeEquipment(
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
+                        base.rt.getString("status"));
+                return type;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return type;
+    }
+
 }

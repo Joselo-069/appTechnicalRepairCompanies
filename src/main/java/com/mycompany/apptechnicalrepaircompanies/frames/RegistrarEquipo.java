@@ -84,16 +84,30 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         cmb_marca.setModel(modelComboBox);
     }
     
-    public int getIdEquipament(String brand, String type){
-        Equipament equipament = equipamentDao.getEquipamentBrandType(brand, type);
-        return equipament.getId();
+    public int getIdEquipament(String model, String brand, String type){
+        Equipament equipament = new Equipament();
+        equipament = equipamentDao.getEquipamentBrandType(model, brand, type);
+        
+        if (equipament.getId() == null) {
+ 
+            ITypeEquipament typeDao = new TypeEquipamentDao();
+            IBrandDao brandDao = new BrandDao();
+            
+            TypeEquipment typeEquipament = typeDao.getTypeName(type);
+            Brand brandEquipament = brandDao.getBrandIName(brand);
+            equipamentDao.registerEquipament(model, typeEquipament.getId(), brandEquipament.getId());
+            equipament = equipamentDao.getEquipamentBrandType(model, brand, type);
+  //          return equipament.getId();
+        }
+        
+//        equipament = equipamentDao.getEquipamentBrandType(model, brand, type);
+        return equipament.getId();        
     }
     
     public void registerEquipament(int idEquipament, String image, String numSerie, String day, String month, String year, String observations, String estatus){
         
         if (validateEquipament(idEquipament, numSerie, observations)) {
            reviewDao.registerReview(idCliente, idEquipament, image, numSerie, day, month, year, observations, estatus, user);
-            //}equipamentDao.registerEquipament(idCliente, tipoEquipo, marca, modelo, numSerie, diaIngreso,mesIngreso,annioIngreso, observaciones,estatus,user);   
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
@@ -101,12 +115,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     
     public boolean validateEquipament (int Idequipament, String num_serie, String observaciones){
         int validacion = 0;
-/*
-        if (modelo.equals("")) {
-            txt_modelo.setBackground(Color.red);
-            validacion++;
-        }
-*/
+
         if (num_serie.equals("")) {
             txt_serie.setBackground(Color.red);
             validacion++;
@@ -122,6 +131,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         return false;
     }
     
+            
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -260,10 +270,9 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         
         String image = "image.ong";
         
-        int idEquipament = getIdEquipament(marca, tipo_equipo);
+        int idEquipament = getIdEquipament(modelo, marca, tipo_equipo);
         
         registerEquipament(idEquipament, image, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus);
-        //registerEquipament(tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, observaciones, estatus, user);        
     }//GEN-LAST:event_jButton_equipoActionPerformed
 
 

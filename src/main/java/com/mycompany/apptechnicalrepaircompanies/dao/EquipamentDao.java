@@ -116,12 +116,13 @@ public class EquipamentDao implements IEquipamentDao {
     }
 
     @Override
-    public Equipament getEquipamentBrandType(String brand, String type) {
+    public Equipament getEquipamentBrandType(String model, String brand, String type) {
         try {
 
             base.prest = base.conec.prepareStatement(SQL_DETAIL_EQUIPAMENT_BRAND_AND_TYPE);
             base.prest.setString(1, brand);
             base.prest.setString(2, type);
+            base.prest.setString(3, model);
 
             base.rt = base.prest.executeQuery();
 

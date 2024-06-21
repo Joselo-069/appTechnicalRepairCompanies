@@ -108,5 +108,28 @@ public class BrandDao implements IBrandDao{
             System.err.println("Error al actualizar " + e);
         }
     }
-    
+
+    @Override
+    public Brand getBrandIName(String name) {
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_DETAIL_BRAND_NAME);
+            base.prest.setString(1, name);
+
+            base.rt = base.prest.executeQuery();
+
+            if (base.rt.next()) {
+                brand = new Brand(
+                        base.rt.getInt("id"),
+                        base.rt.getString("name"),
+                        base.rt.getString("status"));
+                return brand;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return brand;
+    }
 }

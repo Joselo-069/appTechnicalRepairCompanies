@@ -234,7 +234,7 @@ public class ReviewDao implements IReviewDao {
             base.prest.setString(9, status);
             base.prest.setString(10, last_update);
             base.prest.setString(11, ""); // Comentarios técnicos vacíos
-            base.prest.setString(12, "");
+            base.prest.setString(12, last_update);
             
             base.prest.executeUpdate();
 
