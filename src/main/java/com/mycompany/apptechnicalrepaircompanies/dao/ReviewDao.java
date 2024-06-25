@@ -252,7 +252,36 @@ public class ReviewDao implements IReviewDao {
 
     @Override
     public Review getDetailReview(int idEquipament) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_REVIEW_ID);
+            base.prest.setInt(1, idEquipament);
+
+            base.rt = base.prest.executeQuery();
+            
+            if (base.rt.next()) {
+                review = new Review(
+                        base.rt.getInt("id"),
+                        base.rt.getString("model"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"),
+                        base.rt.getString("status"),
+                        base.rt.getString("serial_number"),
+                        base.rt.getString("last_update"),
+                        base.rt.getString("day"),
+                        base.rt.getString("month"),
+                        base.rt.getString("year"),
+                        base.rt.getString("observations"),
+                        base.rt.getString("technical_comments"),
+                        base.rt.getString("technical_review_by"));
+                
+                return review;
+            }
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return review;
     }
 
     @Override

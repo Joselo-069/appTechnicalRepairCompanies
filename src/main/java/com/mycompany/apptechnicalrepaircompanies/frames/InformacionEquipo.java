@@ -4,12 +4,13 @@ import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
-import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
+import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class InformacionEquipo extends javax.swing.JFrame {
@@ -19,6 +20,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
     
     IClientDao clientDao = new ClientDao();
     IEquipamentDao equipamentDao = new EquipamentDao();
+    IReviewDao reviewDao = new ReviewDao();
     
     public InformacionEquipo() {
         initComponents();
@@ -52,27 +54,26 @@ public class InformacionEquipo extends javax.swing.JFrame {
     } 
     
     public void getDetailEquipament() {
-        /*
-        Equipament equipament = equipamentDao.getDetailEquipament(idEquipament);
+        
+        Review review = reviewDao.getDetailReview(1);
 
-        cmb_tipo.setSelectedItem(equipament.getTipo_equipo());
-        cmb_marca.setSelectedItem(equipament.getMarca());
-        cmb_estatus.setSelectedItem(equipament.getTipo_equipo());
-        txt_modelo.setText(equipament.getModelo());
-        txt_serie.setText(equipament.getNum_serie());
-        txt_modificaion.setText(equipament.getUltima_modificacion());
+        cmb_tipo.setSelectedItem(review.getType());
+        cmb_marca.setSelectedItem(review.getBrand());
+        cmb_estatus.setSelectedItem(review.getStatus());
+        txt_modelo.setText(review.getModel());
+        txt_serie.setText(review.getSerial_number());
+        txt_modificaion.setText(review.getLast_update());
 
         String dia = "", mes = "", annio = "";
-        dia = equipament.getDia_ingreso();
-        mes = equipament.getMes_ingreso();
-        annio = equipament.getAnnio_ingreso();
+        dia = review.getDay();
+        mes = review.getMonth();
+        annio = review.getYear();
         txt_fecha.setText(dia + " del " + mes + " del " + annio);
 
-        txtp_observaciones.setText(equipament.getObservaciones());
-        txtp_comentarios.setText(equipament.getComentarios_tecnicos());
+        txtp_observaciones.setText(review.getObservations());
+        txtp_comentarios.setText(review.getTechnical_comments());
 
-        jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + equipament.getRevision_tecnica_de());
-*/
+        jLabel_tecnicos.setText("Comentarios y actualizacion del tecnico: " + review.getTechnical_review());
     }
     
     public boolean validateEquipament(String modelo, String num_serie, String observaciones) {
