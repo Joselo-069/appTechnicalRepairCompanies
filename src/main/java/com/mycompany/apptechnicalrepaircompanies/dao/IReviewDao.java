@@ -6,9 +6,13 @@ import java.util.List;
 public interface IReviewDao {
     /*** ****** ATRIBUTOS ******/
     final String SQL_REGISTER_REVIEW = "INSERT INTO reviews (client_id, equipament_id, image, serial_number, day, month, year, observations, status, last_update, technical_comments, technical_review_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-    //final String SQL_LIST_REVIEW = "SELECT id, type, brand, status FROM reviews";
     final String SQL_LIST_REVIEW = "SELECT r.id, t.name, b.name, r.status FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id";
-    final String SQL_REVIEW_ID = "SELECT r.*, t.name AS type, b.name AS brand, r.status AS status FROM reviews r INNER JOIN equipments e ON e.id = r.equipament_id INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id WHERE r.id=?";
+    final String SQL_REVIEW_ID = "SELECT r.*, e.model AS model, t.name AS type, b.name AS brand, r.status AS status\n"
+            + "FROM reviews r\n"
+            + "INNER JOIN equipments e ON e.id = r.equipament_id\n"
+            + "INNER JOIN type_equipaments t ON e.type_id = t.id\n"
+            + "INNER JOIN brands b ON e.brand_id = b.id\n"
+            + "WHERE r.id=?";
     //final String SQL_LIST_REVIEW_SEARCH = "SELECT id, type, brand, status FROM reviews WHERE status LIKE ?";
     final String SQL_LIST_REVIEW_SEARCH = "SELECT r.id AS id, t.name AS type, b.name as brand, r.status AS status FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id WHERE status LIKE ?";
     //final String SQL_REVIEW_CLIENT_ID = "SELECT id_equipo AS id, tipo_equipo AS type, marca AS brand, estatus FROM equipos WHERE id_cliente = ?";

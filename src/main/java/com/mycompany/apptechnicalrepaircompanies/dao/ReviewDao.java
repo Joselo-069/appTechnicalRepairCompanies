@@ -260,29 +260,57 @@ public class ReviewDao implements IReviewDao {
             base.rt = base.prest.executeQuery();
             
             if (base.rt.next()) {
+
                 review = new Review(
                         base.rt.getInt("id"),
-                        base.rt.getString("model"),
                         base.rt.getString("type"),
                         base.rt.getString("brand"),
-                        base.rt.getString("status"),
+                        base.rt.getString("model"),
                         base.rt.getString("serial_number"),
-                        base.rt.getString("last_update"),
                         base.rt.getString("day"),
                         base.rt.getString("month"),
                         base.rt.getString("year"),
                         base.rt.getString("observations"),
+                        base.rt.getString("status"),
+                        base.rt.getString("last_update"),
                         base.rt.getString("technical_comments"),
                         base.rt.getString("technical_review_by"));
                 
                 return review;
             }
-        } catch (Exception e) {
-            System.err.println("Error en conexion admnistrador");
+        } catch (SQLException e) {
+            System.err.println("Error en conexion admnistrador " + e);
         }
 
         return review;
     }
+    
+    /*
+        public Equipament getEquipamentId(int id) {
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_DETAIL_EQUIPAMENT);
+            base.prest.setInt(1, id);
+
+            base.rt = base.prest.executeQuery();
+
+            if (base.rt.next()) {
+                equipament = new Equipament(
+                        base.rt.getInt("id"),
+                        base.rt.getString("model"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"));
+                return equipament;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return equipament;
+    }
+    */
+    
 
     @Override
     public List<Review> getListReviewsSearch(String estatus) {

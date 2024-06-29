@@ -1,16 +1,24 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
+import com.mycompany.apptechnicalrepaircompanies.dao.BrandDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.ClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IBrandDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IClientDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ITypeEquipament;
 import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.TypeEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.models.Brand;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import com.mycompany.apptechnicalrepaircompanies.models.Review;
+import com.mycompany.apptechnicalrepaircompanies.models.TypeEquipment;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.WindowConstants;
 
 public class InformacionEquipo extends javax.swing.JFrame {
@@ -21,7 +29,9 @@ public class InformacionEquipo extends javax.swing.JFrame {
     IClientDao clientDao = new ClientDao();
     IEquipamentDao equipamentDao = new EquipamentDao();
     IReviewDao reviewDao = new ReviewDao();
-    
+    IBrandDao brandDao = new BrandDao();
+    ITypeEquipament typeDao = new TypeEquipamentDao();
+        
     public InformacionEquipo() {
         initComponents();
         user = Login.user;
@@ -29,7 +39,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         idClient = GestionarClientes.IdCliente;
         
         nom_cli = getClient();
-        getDetailEquipament();
+        getDetailEquipament(idEquipament);
         
         setTitle("Equipo del cliente " + nom_cli);
         setSize(670, 550);
@@ -39,7 +49,8 @@ public class InformacionEquipo extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_nombreCliente.setText(nom_cli);
-
+        setTypeEquipamentCombox();
+        setBrandsComBox();
     }
 
     @Override
@@ -48,14 +59,38 @@ public class InformacionEquipo extends javax.swing.JFrame {
         return retValue;
     }
     
+    public void setTypeEquipamentCombox() {
+        List<TypeEquipment> listTypeEquipament = typeDao.getListTypes();
+        DefaultComboBoxModel<String> modelComboBox = new DefaultComboBoxModel<>();
+
+        for (TypeEquipment type : listTypeEquipament) {
+            String textTypeEquipament = type.getName();
+            modelComboBox.addElement(textTypeEquipament);
+        }
+
+        cmb_tipo.setModel(modelComboBox);
+    }
+
+    public void setBrandsComBox() {
+        List<Brand> listBrands = brandDao.getListBrands();
+        DefaultComboBoxModel<String> modelComboBox = new DefaultComboBoxModel<>();
+
+        for (Brand brand : listBrands) {
+            String textBrand = brand.getName();
+            modelComboBox.addElement(textBrand);
+        }
+
+        cmb_marca.setModel(modelComboBox);
+    }
+
     public String getClient() {
         Client cli = clientDao.getClientId(idClient);
         return cli.getName();
     } 
     
-    public void getDetailEquipament() {
+    public void getDetailEquipament(int id) {
         
-        Review review = reviewDao.getDetailReview(1);
+        Review review = reviewDao.getDetailReview(id);
 
         cmb_tipo.setSelectedItem(review.getType());
         cmb_marca.setSelectedItem(review.getBrand());
