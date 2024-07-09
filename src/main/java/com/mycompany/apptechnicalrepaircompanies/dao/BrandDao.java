@@ -5,7 +5,9 @@ import com.mycompany.apptechnicalrepaircompanies.models.Brand;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class BrandDao implements IBrandDao{
@@ -131,5 +133,25 @@ public class BrandDao implements IBrandDao{
         }
 
         return brand;
+    }
+
+    @Override
+    public Map<String, String> getReportBrand() {
+        Map<String, String> listReport = new HashMap<>();
+        
+        try {
+
+            base.prest = base.conec.prepareStatement(SQL_GROUP_BY_MARCA);
+            base.rt = base.prest.executeQuery();
+            
+            if (base.rt.next()) {
+                listReport.put(base.rt.getString("name"), base.rt.getString("countBrand"));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return listReport;
     }
 }

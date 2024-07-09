@@ -28,7 +28,6 @@ public interface IReviewDao {
     // final String SQL_UPDATE_REVIEW_TENCICO = "UPDATE equipos SET estatus=?, comentarios_tecnicos=?, revision_tecnica_de=? WHERE id_equipo = ?";
     final String SQL_UPDATE_REVIEW_TENCICO = "UPDATE reviews SET status=?, technical_comments=?, technical_review_by=? WHERE id = ?";
     final String SQL_GROUP_BY_STATUS = "SELECT status, count(status) as CountStatus FROM reviews GROUP BY status";
-    final String SQL_GROUP_BY_MARCA = "SELECT b.name, COUNT(b.name) as CountBrand FROM reviews r INNER JOIN equipments e INNER JOIN type_equipaments t ON e.type_id = t.id INNER JOIN brands b ON e.brand_id = b.id GROUP BY b.name";
             
     /*** ****** METODOS ******/
     void registerReview(int idClient, int idEquipament, String image, String numSerie, String day, String month, String year, String observations, String status, String last_update);
