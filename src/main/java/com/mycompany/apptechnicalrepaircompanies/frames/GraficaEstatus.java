@@ -1,93 +1,94 @@
 
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.WindowConstants;
 
 
 public class GraficaEstatus extends javax.swing.JFrame {
 
-
     String user;
-    int NuevoIngreso, NoReperado, EnRevision, Reparado, Entregado;
+    List<String> vector_status_name = new ArrayList<>();
+    List<Integer> vector_status_count = new ArrayList<>();
     
-    String[] vector_status_nombre = new String[5];
-    int[] vector_status_cantidad = new int[5];
+    IReviewDao reviewDao = new ReviewDao();
     
     public GraficaEstatus() {
         initComponents();
         
         user = Login.user;
-        
-        setSize(550,450);
-        setResizable(false);
-        setTitle("Tecnico - Sesion de " + user);
-        setLocationRelativeTo(null);
+        Design.viewSizeFrame(this, user, 550, 500, "Tecnico - Sesion de " + user);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        /*
-        try {
-            Connection cn = Conexion.conection();
-            PreparedStatement pst = cn.prepareStatement("SELECT estatus, count(estatus) AS Cantidad FROM equipos GROUP BY estatus");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                int posicion = 0;
-                do {                    
-                    vector_status_nombre[posicion] = rs.getString(1);
-                    vector_status_cantidad[posicion] = rs.getInt(2);
-                    
-                    if (vector_status_nombre[posicion].equalsIgnoreCase("En revision")) {
-                        EnRevision = vector_status_cantidad[posicion];
-                    } else if (vector_status_nombre[posicion].equalsIgnoreCase("Entregado")){
-                        Entregado = vector_status_cantidad[posicion];
-                    } else if (vector_status_nombre[posicion].equalsIgnoreCase("No reparado")){
-                        NoReperado = vector_status_cantidad[posicion];
-                    } else if (vector_status_nombre[posicion].equalsIgnoreCase("Nuevo ingreso")){
-                        NuevoIngreso = vector_status_cantidad[posicion];
-                    } else if (vector_status_nombre[posicion].equalsIgnoreCase("Reparado")){
-                        Reparado = vector_status_cantidad[posicion];
-                    }
-                    posicion++;
-                } while (rs.next());
-                
-            }
-            
-        } catch (Exception e) {
-            System.err.print("Error en conectar con la BD");
-        }*/
+        getReportStatus();
     }
-
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel_titulo = new javax.swing.JLabel();
+        lb_status = new javax.swing.JLabel();
+        lb_count = new javax.swing.JLabel();
+        lb_total_status = new javax.swing.JLabel();
+        lb_total_count = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
 
-        jLabel_titulo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel_titulo.setText("Grafica de estatus");
+        jLabel_titulo.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel_titulo.setText("Reporte de estatus");
+
+        lb_status.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        lb_count.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lb_count.setForeground(new java.awt.Color(0, 0, 0));
+
+        lb_total_status.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        lb_total_count.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel_titulo)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel_titulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_status, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_total_status, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_total_count, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_count, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel_titulo)
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lb_count, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                    .addComponent(lb_status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lb_total_count, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_total_status, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -97,6 +98,41 @@ public class GraficaEstatus extends javax.swing.JFrame {
     public Image getIconImage(){
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("icon.png"));
         return retValue;
+    }
+    
+    public void getReportStatus(){
+        Map<String,Integer> listBrands = new HashMap<>();
+        StringBuilder cadName = new StringBuilder("<html>");
+        StringBuilder cadCount = new StringBuilder("<html>");
+        int countReviews = 0;
+
+        listBrands = reviewDao.getReportStatus();
+        
+        for (String key : listBrands.keySet()) {
+            vector_status_name.add(key);
+        }
+
+        for (int i = 0; i < vector_status_name.size(); i++) {
+            cadName.append((i+1)+". ").append(vector_status_name.get(i)).append("<br><hr><br>");
+        }
+        
+        cadName.append("</html>");
+        lb_status.setText(cadName.toString());
+
+        for (int value : listBrands.values()) {
+            vector_status_count.add(value);
+            countReviews = countReviews + value; 
+        }
+        
+        for (int i = 0; i < vector_status_count.size(); i++) {
+            cadCount.append("N° ").append(vector_status_count.get(i)).append("<br><hr><br>");
+        }
+        
+        cadCount.append("</html>");
+        lb_count.setText(cadCount.toString());
+        
+        lb_total_status.setText("Total de status: " + vector_status_name.size());
+        lb_total_count.setText("Cantidad total: " + countReviews);
     }
     
     public static void main(String args[]) {
@@ -134,53 +170,10 @@ public class GraficaEstatus extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel_titulo;
+    private javax.swing.JLabel lb_count;
+    private javax.swing.JLabel lb_status;
+    private javax.swing.JLabel lb_total_count;
+    private javax.swing.JLabel lb_total_status;
     // End of variables declaration//GEN-END:variables
-
-    public int EstatusMasRepetido(int NuevoIngreso, int NoReperado, int EnRevision, int Reparado, int Entregado) {
-        if (NuevoIngreso > NoReperado && NuevoIngreso > EnRevision && NuevoIngreso > Reparado && NuevoIngreso > Entregado) {
-            return NuevoIngreso;
-        } else if(NoReperado > EnRevision && NoReperado > Reparado && NoReperado > Entregado) {
-            return NoReperado;
-        } else if(EnRevision > Reparado && EnRevision > Entregado){
-            return EnRevision;
-        } else if(Reparado > Entregado){
-            return Reparado;
-        } else {
-            return Entregado;
-        }
-    }
-    
-    @Override
-    public void paint(Graphics g){
-        super.paint(g);
-        int Estatus_Mas_Repetido = EstatusMasRepetido(NuevoIngreso, NoReperado, EnRevision, Reparado, Entregado);
-        
-        int largo_NuevoIngreso = NuevoIngreso * 400 / Estatus_Mas_Repetido;
-        int largo_NoReparado = NoReperado * 400 / Estatus_Mas_Repetido;
-        int largo_EnRevision = EnRevision * 400 / Estatus_Mas_Repetido;
-        int largo_Reparado = Reparado * 400 / Estatus_Mas_Repetido;
-        int largo_Entregado = Entregado * 400 / Estatus_Mas_Repetido;
-        
-        g.setColor(Color.gray);
-        g.fillRect(100, 100, largo_NuevoIngreso, 40);
-        g.drawString("Nuevo Ingreso", 10, 118);
-        g.drawString("Cantidad: " + NuevoIngreso, 10, 133);
-
-        g.setColor(Color.darkGray);
-        g.fillRect(100, 150, largo_NoReparado, 40);
-        g.drawString("No reparado", 10, 168);
-        g.drawString("Cantidad: " + NoReperado, 10, 183);
-        
-        g.setColor(Color.gray);
-        g.fillRect(100, 200, largo_EnRevision, 40);
-        g.drawString("En Revision", 10, 218);
-        g.drawString("Cantidad: " + EnRevision, 10, 233);
-                
-        g.setColor(Color.darkGray);
-        g.fillRect(100, 300, largo_Entregado, 40);
-        g.drawString("Entregado", 10, 318);
-        g.drawString("Cantidad: " + Entregado, 10, 333);
-
-    }
 
 }

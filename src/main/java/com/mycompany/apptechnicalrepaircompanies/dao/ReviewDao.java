@@ -5,7 +5,9 @@ import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class ReviewDao implements IReviewDao {
@@ -206,16 +208,6 @@ public class ReviewDao implements IReviewDao {
             System.err.println("Error al actualizar " + e);
         }
     }
-
-    @Override
-    public void drawEstatus() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void drawMarcas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     */
 
     @Override
@@ -247,7 +239,27 @@ public class ReviewDao implements IReviewDao {
 
     @Override
     public List<Review> getListReviews() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+            try {
+                base.prest = base.conec.prepareStatement(SQL_LIST_REVIEW);
+                base.rt = base.prest.executeQuery();
+
+            while (base.rt.next()) {
+                review = new Review(
+                        base.rt.getInt("id"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"),
+                        base.rt.getString("model"),
+                        base.rt.getString("status"));
+
+                reviews.add(review);
+            }
+
+            return reviews;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al mostrar la informacion");
+        }
+        return reviews;
     }
 
     @Override
@@ -285,36 +297,30 @@ public class ReviewDao implements IReviewDao {
         return review;
     }
     
-    /*
-        public Equipament getEquipamentId(int id) {
-        try {
-
-            base.prest = base.conec.prepareStatement(SQL_DETAIL_EQUIPAMENT);
-            base.prest.setInt(1, id);
-
-            base.rt = base.prest.executeQuery();
-
-            if (base.rt.next()) {
-                equipament = new Equipament(
-                        base.rt.getInt("id"),
-                        base.rt.getString("model"),
-                        base.rt.getString("type"),
-                        base.rt.getString("brand"));
-                return equipament;
-            }
-
-        } catch (Exception e) {
-            System.err.println("Error en conexion admnistrador");
-        }
-
-        return equipament;
-    }
-    */
-    
-
     @Override
     public List<Review> getListReviewsSearch(String estatus) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+          List<Review> reviews = new ArrayList<>();
+        try {
+            base.prest = base.conec.prepareStatement(SQL_LIST_REVIEW_SEARCH);
+            base.prest.setString(1, "%" + estatus + "%");
+            base.rt = base.prest.executeQuery();
+
+            while (base.rt.next()) {
+                review = new Review(
+                        base.rt.getInt("id"),
+                        base.rt.getString("type"),
+                        base.rt.getString("brand"),
+                        base.rt.getString("model"),
+                        base.rt.getString("status"));
+
+                reviews.add(review);
+            }
+
+            return reviews;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al mostrar la informacion");
+        }
+        return reviews;
     }
 
     @Override
@@ -357,14 +363,22 @@ public class ReviewDao implements IReviewDao {
     }
 
     @Override
-    public void reportStatus() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Map<String, Integer> getReportStatus() {
+        
+        Map<String, Integer> listReport = new HashMap<>();
+        
+        try {
+            base.prest = base.conec.prepareStatement(SQL_GROUP_BY_STATUS);
+            base.rt = base.prest.executeQuery();
+            
+            while (base.rt.next()) {
+                listReport.put(base.rt.getString("status"), base.rt.getInt("countStatus"));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error en conexion admnistrador");
+        }
+
+        return listReport;
     }
-
-    @Override
-    public void reportBrands() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-
 }

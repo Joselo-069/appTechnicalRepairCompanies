@@ -64,7 +64,6 @@ public class BrandDao implements IBrandDao{
         try {
             base.prest = base.conec.prepareStatement(SQL_REGISTER_BRAND);
 
-            //base.prest.setInt(1, 0);
             base.prest.setString(1, name);
 
             base.prest.executeUpdate();
@@ -140,11 +139,10 @@ public class BrandDao implements IBrandDao{
         Map<String, String> listReport = new HashMap<>();
         
         try {
-
             base.prest = base.conec.prepareStatement(SQL_GROUP_BY_MARCA);
             base.rt = base.prest.executeQuery();
             
-            if (base.rt.next()) {
+            while (base.rt.next()) {
                 listReport.put(base.rt.getString("name"), base.rt.getString("countBrand"));
             }
 

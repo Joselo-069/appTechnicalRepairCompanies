@@ -2,6 +2,7 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 
 import com.mycompany.apptechnicalrepaircompanies.dao.IUserDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.UserDao;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -16,11 +17,7 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         initComponents();
         user = Login.user;
         
-        setTitle("Registrar nuevo usuario - Sesion de " + user);
-        setSize(630, 350);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
+        Design.viewSizeFrame(this, user, 630, 350, "Registrar nuevo usuario - Sesion de " + user);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 

@@ -2,7 +2,11 @@ package com.mycompany.apptechnicalrepaircompanies.frames;
 
 import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
 import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
+import com.mycompany.apptechnicalrepaircompanies.models.Review;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -19,20 +23,16 @@ public class GestionarEquipos extends javax.swing.JFrame {
     
     DefaultTableModel model = new DefaultTableModel();
     IEquipamentDao equipament = new EquipamentDao();
+    IReviewDao reviewDao = new ReviewDao();
     
     public GestionarEquipos() {
         initComponents();
         
         user = Login.user;
-        
-        setSize(630, 380);
-        setTitle("Capturista - Sesion de " + user);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
+        Design.viewSizeFrame(this, user, 630, 380, "Capturista - Sesion de " + user);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        listEquipament();
+        listReviews();
     }
     
     @Override
@@ -41,9 +41,9 @@ public class GestionarEquipos extends javax.swing.JFrame {
         return retValue;
     }
 
-    public void listEquipament() {
-        /*
-        ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipaments();
+    public void listReviews() {
+        
+        ArrayList<Review> reviews = (ArrayList<Review>) reviewDao.getListReviews();
 
         tbEquipos = new JTable(model);
         jScrollEquipos.setViewportView(tbEquipos);
@@ -53,22 +53,22 @@ public class GestionarEquipos extends javax.swing.JFrame {
         model.addColumn("Marca");
         model.addColumn("Estatus");
 
-        for (Equipament equipament : equipaments) {
-            Object[] file = new Object[4];
-            file[0] = equipament.getId_equipo();
-            file[1] = equipament.getTipo_equipo();
-            file[2] = equipament.getMarca();
-            file[3] = equipament.getEstatus();
+        for (Review equipament : reviews) {
+            Object[] file = new Object[5];
+            file[0] = equipament.getId();
+            file[1] = equipament.getType();
+            file[2] = equipament.getBrand();
+            file[3] = equipament.getModel();
+            file[4] = equipament.getStatus();
+            
             model.addRow(file);
         }
-        
-        ObtenerDatosTabla();
-*/
+
+        getDataTable();
     }
     
-    public void listEquipamentSearch(String status) {
-       /*
-        ArrayList<Equipament> equipaments = (ArrayList<Equipament>) equipament.getListEquipamentsSearch(status);
+    public void listReviewsSearch(String status) {
+         ArrayList<Review> reviews = (ArrayList<Review>) reviewDao.getListReviewsSearch(status);
 
         tbEquipos = new JTable(model);
         jScrollEquipos.setViewportView(tbEquipos);
@@ -78,18 +78,21 @@ public class GestionarEquipos extends javax.swing.JFrame {
         model.addColumn("Marca");
         model.addColumn("Estatus");
 
-        for (Equipament equipament : equipaments) {
-            Object[] file = new Object[4];
-            file[0] = equipament.getId_equipo();
-            file[1] = equipament.getTipo_equipo();
-            file[2] = equipament.getMarca();
-            file[3] = equipament.getEstatus();
+        for (Review equipament : reviews) {
+            Object[] file = new Object[5];
+            file[0] = equipament.getId();
+            file[1] = equipament.getType();
+            file[2] = equipament.getBrand();
+            file[3] = equipament.getModel();
+            file[4] = equipament.getStatus();
+            
             model.addRow(file);
         }
-*/
+
+        getDataTable();
     }
 
-    public void ObtenerDatosTabla() {
+    public void getDataTable() {
         tbEquipos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -195,7 +198,7 @@ public class GestionarEquipos extends javax.swing.JFrame {
         model.setRowCount(0);
         model.setColumnCount(0);
         
-        listEquipamentSearch(selectName);        
+        listReviewsSearch(selectName);        
     }//GEN-LAST:event_btn_mostrarActionPerformed
 
     private void cmb_estatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_estatusActionPerformed

@@ -13,13 +13,12 @@ public interface IBrandDao {
     final String SQL_DETAIL_BRAND = "SELECT * FROM brands WHERE id= ?";
     final String SQL_DETAIL_BRAND_NAME = "SELECT * FROM brands WHERE name= ?";
     final String SQL_DELTE_BRAND = "UPDATE brands SET status=0 WHERE id = ?";
-    final String SQL_GROUP_BY_MARCA = "SELECT b.name, COUNT(b.name) as countBrand \n"
-            + "FROM reviews r \n"
-            + "INNER JOIN equipments e ON e.id = r.equipament_id\n"
-            + "INNER JOIN type_equipaments t ON e.type_id = t.id \n"
-            + "INNER JOIN brands b ON e.brand_id = b.id \n"
+    final String SQL_GROUP_BY_MARCA = "SELECT b.name, COUNT(r.id) AS countBrand \n"
+            + "FROM brands b \n"
+            + "LEFT JOIN equipments e ON e.brand_id = b.id \n"
+            + "LEFT JOIN reviews r ON r.equipament_id = e.id \n"
             + "GROUP BY b.name;";
-    
+        
     /******** METODOS ******/
     List<Brand> getListBrands();
     Brand getBrandId(int id);
