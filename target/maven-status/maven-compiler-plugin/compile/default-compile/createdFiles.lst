@@ -4,8 +4,10 @@ com\mycompany\apptechnicalrepaircompanies\frames\Admin$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarClientes$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$1.class
+com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquiposRevisados$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$1.class
+com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquiposRevisados.class
 com\mycompany\apptechnicalrepaircompanies\dao\IEquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\AppTechnicalRepairCompanies.class
 com\mycompany\apptechnicalrepaircompanies\models\User.class
@@ -16,7 +18,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$5.class
 com\mycompany\apptechnicalrepaircompanies\emuns\EstatusEquipamet.class
-com\mycompany\apptechnicalrepaircompanies\frames\GraficaMarcas$1.class
+com\mycompany\apptechnicalrepaircompanies\frames\Login$6.class
 com\mycompany\apptechnicalrepaircompanies\dao\EquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo$4.class
@@ -48,6 +50,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\Capturista$1.class
 com\mycompany\apptechnicalrepaircompanies\dao\IBrandDao.class
 com\mycompany\apptechnicalrepaircompanies\frames\Capturista$2.class
 com\mycompany\apptechnicalrepaircompanies\dao\UserDao.class
+com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquiposRevisados$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquipos.class
@@ -56,6 +59,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$3.clas
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\RestaurarPassword$1.class
+com\mycompany\apptechnicalrepaircompanies\frames\Login$7.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo.class
@@ -65,13 +69,16 @@ com\mycompany\apptechnicalrepaircompanies\frames\Capturista$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$6.class
 com\mycompany\apptechnicalrepaircompanies\dao\BrandDao.class
 com\mycompany\apptechnicalrepaircompanies\dao\ITypeEquipament.class
-com\mycompany\apptechnicalrepaircompanies\utils\Design$NameExtractor.class
+com\mycompany\apptechnicalrepaircompanies\frames\Login$5.class
 com\mycompany\apptechnicalrepaircompanies\dao\ClientDao.class
 com\mycompany\apptechnicalrepaircompanies\dao\IClientDao.class
+com\mycompany\apptechnicalrepaircompanies\frames\GestionarEquiposRevisados$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$2.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarUsuarios.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$9.class
+com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$7.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$2.class
+com\mycompany\apptechnicalrepaircompanies\dao\DeliverEquipamentDao.class
 com\mycompany\apptechnicalrepaircompanies\emuns\EstatusUser.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$5.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$5.class
@@ -81,6 +88,7 @@ com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipoTecnico$1.clas
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionCliente$8.class
 com\mycompany\apptechnicalrepaircompanies\models\Client.class
+com\mycompany\apptechnicalrepaircompanies\frames\Tecnico$4.class
 com\mycompany\apptechnicalrepaircompanies\frames\GestionarClientes.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarClientes$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\Tecnico.class
@@ -90,7 +98,6 @@ com\mycompany\apptechnicalrepaircompanies\frames\RegistrarEquipo$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionUsuario$6.class
 com\mycompany\apptechnicalrepaircompanies\frames\InformacionEquipo$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\Admin$3.class
-com\mycompany\apptechnicalrepaircompanies\frames\GraficaEstatus$1.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios.class
 com\mycompany\apptechnicalrepaircompanies\frames\Login$3.class
 com\mycompany\apptechnicalrepaircompanies\frames\RegistrarUsuarios$1.class

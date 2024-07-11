@@ -14,16 +14,18 @@ import com.mycompany.apptechnicalrepaircompanies.models.Brand;
 import com.mycompany.apptechnicalrepaircompanies.models.Client;
 import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import com.mycompany.apptechnicalrepaircompanies.models.TypeEquipment;
+import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class InformacionEquipo extends javax.swing.JFrame {
 
-    int idClient, idEquipament;
+    int idClient, idReview, idEquipament;
     String user = "", nom_cli = "";
     
     IClientDao clientDao = new ClientDao();
@@ -35,17 +37,13 @@ public class InformacionEquipo extends javax.swing.JFrame {
     public InformacionEquipo() {
         initComponents();
         user = Login.user;
-        idEquipament = InformacionCliente.idEquipo;
+        idReview = InformacionCliente.idEquipo;
         idClient = GestionarClientes.IdCliente;
         
         nom_cli = getClient();
-        getDetailEquipament(idEquipament);
+        getDetailEquipament(idReview);
         
-        setTitle("Equipo del cliente " + nom_cli);
-        setSize(670, 550);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        
+        Design.viewSizeFrame(this, user, 670, 550, "Equipo del cliente " + nom_cli);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         txt_nombreCliente.setText(nom_cli);
@@ -133,19 +131,19 @@ public class InformacionEquipo extends javax.swing.JFrame {
 
         return false;
     }
-    
-    public void updateEquipament(int idEquipo, String tipo_equipo, String marca, String modelo, String num_serie, String observaciones, String estatus, String user) {
-        /*
+ /*   
+    public void updateEquipament(int idEquipament, String image, String serial_number, String observations, String status, String last_update, int idReview) {
+        
         if(validateEquipament(modelo, num_serie, observaciones)){
-            equipamentDao.updateEquipament(idEquipo, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);        
+
             clean();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
-        */
+        
     }
-    
+   */ 
     private void clean(){
         txt_nombreCliente.setText("");
         txt_fecha.setText("");
@@ -346,7 +344,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         num_serie = txt_serie.getText().trim();
         observaciones = txtp_observaciones.getText();
         
-        updateEquipament(idEquipament, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);
+      // updateEquipament(idReview, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, user);
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void txt_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaActionPerformed

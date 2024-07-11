@@ -1,9 +1,12 @@
 package com.mycompany.apptechnicalrepaircompanies.frames;
 
+import com.mycompany.apptechnicalrepaircompanies.dao.DeliverEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.EquipamentDao;
+import com.mycompany.apptechnicalrepaircompanies.dao.IDeliverEquipament;
 import com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.IReviewDao;
 import com.mycompany.apptechnicalrepaircompanies.dao.ReviewDao;
+import com.mycompany.apptechnicalrepaircompanies.models.DeliverEquipment;
 import com.mycompany.apptechnicalrepaircompanies.models.Review;
 import com.mycompany.apptechnicalrepaircompanies.utils.Design;
 import java.awt.Image;
@@ -15,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class GestionarEquipos extends javax.swing.JFrame {
+public class GestionarEquiposRevisados extends javax.swing.JFrame {
 
     String user;
     public static int IdEquipo = 0;
@@ -23,8 +26,8 @@ public class GestionarEquipos extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     IEquipamentDao equipament = new EquipamentDao();
     IReviewDao reviewDao = new ReviewDao();
-    
-    public GestionarEquipos() {
+    IDeliverEquipament deliverDao = new DeliverEquipamentDao();
+    public GestionarEquiposRevisados() {
         initComponents();
         
         user = Login.user;
@@ -42,25 +45,32 @@ public class GestionarEquipos extends javax.swing.JFrame {
 
     public void listReviews() {
         
-        ArrayList<Review> reviews = (ArrayList<Review>) reviewDao.getListReviews();
+        ArrayList<DeliverEquipment> delivers = (ArrayList<DeliverEquipment>) deliverDao.getListDeliverEquipament();
 
         tbEquipos = new JTable(model);
         jScrollEquipos.setViewportView(tbEquipos);
 
         model.addColumn("Id");
+        model.addColumn("Cliente");
         model.addColumn("Tipo");
-        model.addColumn("Marca");
         model.addColumn("Modelo");
-        model.addColumn("Estatus");
+        model.addColumn("Marca");
+        model.addColumn("Comentario");
+        model.addColumn("Fecha Habilitado");
+        model.addColumn("Precio");
+        model.addColumn("Estado");
 
-        for (Review equipament : reviews) {
-            Object[] file = new Object[5];
+        for (DeliverEquipment equipament : delivers) {
+            Object[] file = new Object[9];
             file[0] = equipament.getId();
-            file[1] = equipament.getType();
-            file[2] = equipament.getBrand();
+            file[1] = equipament.getFullname();
+            file[2] = equipament.getType();
             file[3] = equipament.getModel();
-            file[4] = equipament.getStatus();
-            
+            file[4] = equipament.getBrand();
+            file[5] = equipament.getTechnical_comments();
+            file[6] = equipament.getSince_date();
+            file[7] = equipament.getTechnical_price();
+            file[8] = equipament.getStatus();
             model.addRow(file);
         }
 
@@ -122,7 +132,7 @@ public class GestionarEquipos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Equipos Registrados");
+        jLabel1.setText("Equipos Reparados/Entregados");
 
         tbEquipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,26 +169,27 @@ public class GestionarEquipos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(192, 192, 192)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(42, 42, 42)
-                            .addComponent(jScrollEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cmb_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(cmb_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(btn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(87, 87, 87)
+                            .addComponent(btn_mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel1)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmb_estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jScrollEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)

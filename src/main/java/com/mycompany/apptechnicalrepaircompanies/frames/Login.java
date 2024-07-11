@@ -55,9 +55,22 @@ public class Login extends javax.swing.JFrame {
         btn_access.setForeground(new java.awt.Color(0, 0, 0));
         btn_access.setText("Acceder");
         btn_access.setBorder(null);
+        btn_access.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_accessMouseEntered(evt);
+            }
+        });
         btn_access.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_accessActionPerformed(evt);
+            }
+        });
+        btn_access.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_accessKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btn_accessKeyReleased(evt);
             }
         });
         getContentPane().add(btn_access, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
@@ -68,6 +81,14 @@ public class Login extends javax.swing.JFrame {
         txt_password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_passwordActionPerformed(evt);
+            }
+        });
+        txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passwordKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_passwordKeyReleased(evt);
             }
         });
         getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 370, 210, -1));
@@ -91,15 +112,7 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
-
-    private void txt_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_userActionPerformed
-
-    private void btn_accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accessActionPerformed
+    public void accessUser(){
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
 
@@ -125,7 +138,37 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
         }
+    }
+    
+    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passwordActionPerformed
+
+    private void txt_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_userActionPerformed
+
+    private void btn_accessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accessActionPerformed
+        accessUser();
     }//GEN-LAST:event_btn_accessActionPerformed
+
+    private void btn_accessKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_accessKeyPressed
+         accessUser();
+    }//GEN-LAST:event_btn_accessKeyPressed
+
+    private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
+    }//GEN-LAST:event_txt_passwordKeyPressed
+
+    private void btn_accessKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_accessKeyReleased
+
+    }//GEN-LAST:event_btn_accessKeyReleased
+
+    private void txt_passwordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyReleased
+
+    }//GEN-LAST:event_txt_passwordKeyReleased
+
+    private void btn_accessMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_accessMouseEntered
+    }//GEN-LAST:event_btn_accessMouseEntered
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

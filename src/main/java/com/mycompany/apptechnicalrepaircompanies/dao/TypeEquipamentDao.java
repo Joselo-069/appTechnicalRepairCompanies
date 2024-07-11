@@ -1,12 +1,5 @@
 package com.mycompany.apptechnicalrepaircompanies.dao;
 
-import static com.mycompany.apptechnicalrepaircompanies.dao.IClientDao.SQL_CLIENT_ID;
-import static com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao.SQL_DELTE_EQUIPAMENT;
-import static com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao.SQL_LIST_EQUIPAMENT;
-import static com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao.SQL_REGISTER_EQUIPAMENT;
-import static com.mycompany.apptechnicalrepaircompanies.dao.IEquipamentDao.SQL_UPDATE_EQUIPAMENT;
-import com.mycompany.apptechnicalrepaircompanies.models.Client;
-import com.mycompany.apptechnicalrepaircompanies.models.Equipament;
 import com.mycompany.apptechnicalrepaircompanies.models.TypeEquipment;
 import com.mycompany.apptechnicalrepaircompanies.utils.Conexion;
 import java.sql.SQLException;

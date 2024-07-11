@@ -16,6 +16,7 @@ public class Review {
     private String last_update;
     private String technical_comments;
     private String technical_review;
+    private Client client; 
 
     public Review() {
     }
@@ -34,6 +35,23 @@ public class Review {
         this.last_update = last_update;
         this.technical_comments = technical_comments;
         this.technical_review = technical_review;
+    }
+    
+    public Review(Integer id, String type, String brand, String model, String serial_number, String day, String month, String year, String observations, String status, String last_update, String technical_comments, String technical_review, String name, String email) {
+        this.id = id;
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.serial_number = serial_number;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.observations = observations;
+        this.status = status;
+        this.last_update = last_update;
+        this.technical_comments = technical_comments;
+        this.technical_review = technical_review;
+        this.client = new Client(name, email);
     }
 
     public Review(Integer id, String type, String brand, String model, String status) {
@@ -146,6 +164,14 @@ public class Review {
 
     public void setTechnical_review(String technical_review) {
         this.technical_review = technical_review;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
     
     

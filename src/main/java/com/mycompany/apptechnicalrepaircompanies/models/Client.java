@@ -21,6 +21,11 @@ public class Client {
         this.last_update = last_update;
     }
 
+    public Client(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+    
     public Integer getId() {
         return id;
     }
